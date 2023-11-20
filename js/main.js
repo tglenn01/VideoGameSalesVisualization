@@ -1,4 +1,4 @@
-d3.csv('data/leaderlist.csv').then(data => {
+d3.csv('data/video_game_sales.csv').then(data => {
 
     let processedData = preprocessData(data)
 
