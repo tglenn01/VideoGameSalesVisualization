@@ -1,4 +1,4 @@
-class RadialPlot {
+class BarChart {
 
 
     // TODO set borders/margins

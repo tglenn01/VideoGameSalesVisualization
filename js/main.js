@@ -20,7 +20,7 @@ d3.csv('data/processed.csv').then(data => {
         parentElement: '#vis',
     }, processedData)
 
-    let radialPlot = new RadialPlot({
+    let barChart = new BarChart({
         parentElement: '#vis',
     }, processedData)
 
