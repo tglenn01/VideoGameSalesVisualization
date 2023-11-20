@@ -1,4 +1,4 @@
-d3.csv('data/video_game_sales.csv').then(data => {
+d3.csv('data/processed.csv').then(data => {
     // Convert columns to numerical values
     data.forEach(d => {
         Object.keys(d).forEach((attr => {
