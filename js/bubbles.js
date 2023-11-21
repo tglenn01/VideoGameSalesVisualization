@@ -32,17 +32,13 @@ class Bubbles {
             .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
             .interpolate(d3.interpolateHcl);
 
-
         // Define size of SVG drawing area
         vis.svg = d3.select(vis.config.parentElement).append('svg')
+            .attr("viewBox", `-${vis.config.containerWidth / 2} -${vis.config.containerHeight / 2} 
+            ${vis.config.containerWidth} ${vis.config.containerHeight}`)
             .attr('width', vis.config.containerWidth)
             .attr('height', vis.config.containerHeight)
             .attr('id', "bubbles");
-
-        // Append group element that will contain our actual chart
-        // and position it according to the given margin config
-        vis.chart = vis.svg.append('g')
-            .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`);
 
         // Todo: Append Axis title
 
@@ -71,63 +67,31 @@ class Bubbles {
             .sum(d => d.Global_Sales)
             .sort((a, b) => b.Global_Sales - a.Global_Sales));
 
-        console.log(root);
-        console.log(root.descendants())
-
-        //Add nodes
+        // Append the nodes.
         const node = vis.svg.append("g")
-            .selectAll()
-            .data(root.descendants())
-            .join("g")
-            .attr("transform", d => `translate(${d.x},${d.y})`);
-
-        // Add a filled or stroked circle.
-        node.append("circle")
-            .attr("fill", d => d.children ? "#fff" : "#ddd")
-            .attr("stroke", d => d.children ? "#bbb" : null)
-            .attr("r", d => d.r);
-
-
-
-
-        /*
-        // Compute the layout
-        const pack = data => d3.pack()
-            .size([vis.width, vis.height])
-            .padding(3)
-            (d3.hierarchy(vis.data)
-                .sum(d => d.Global_Sales)
-                .sort((a, b) => b.Global_Sales - a.Global_Sales));
-        const root = pack(vis.data);
-
-        // Append the nodes
-        const node = vis.svg.append('g')
             .selectAll("circle")
             .data(root.descendants())
             .join("circle")
-            //.attr("fill", d => d.children ? vis.colorScale(d.depth) : "white")
-            .attr("pointer-events", d => Object.keys(d).length > 0 ? "none" : null)
+            .attr("fill", d => d.children ? vis.colorScale(d.depth) : "white")
+            .attr("pointer-events", d => !d.children ? "none" : null)
             .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
             .on("mouseout", function() { d3.select(this).attr("stroke", null); })
-            //.on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
-            */
+            .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
 
+        // Add a label to leaf nodes.
+        const text = node
+            .filter(d => !d.children && d.r > 10)
+            .append("text")
+            .attr("clip-path", d => `circle(${d.r})`);
 
-        /*// Append the text labels.
-        const label = vis.svg.append("g")
-            .style("font", "10px sans-serif")
-            .attr("pointer-events", "none")
-            .attr("text-anchor", "middle")
-            .selectAll("text")
-            .data(root.descendants())
-            .join("text")
-            .style("fill-opacity", d => d.parent === root ? 1 : 0)
-            .style("display", d => d.parent === root ? "inline" : "none")
-            //.text(d => d.data.name);
+        // Add a tspan for each CamelCase-separated word.
+        text.selectAll()
+            .data(d => d.data.Name.split(/(?=[A-Z][a-z])|\s+/g))
+            .join("tspan")
+            .attr("x", 0)
+            .attr("y", (d, i, nodes) => `${i - nodes.length / 2 + 0.35}em`)
+            .text(d => d.Name);
 
-        // Todo: Tooltip event listeners
-
-        // Create the zoom behavior and zoom immediately in to the initial focus node.
         vis.svg.on("click", (event) => zoom(event, root));
         let focus = root;
         let view;
@@ -138,7 +102,7 @@ class Bubbles {
 
             view = v;
 
-            label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
+            //label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
             node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
             node.attr("r", d => d.r * k);
         }
@@ -155,18 +119,18 @@ class Bubbles {
                     return t => zoomTo(i(t));
                 });
 
+            /*
             label
                 .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
                 .transition(transition)
                 .style("fill-opacity", d => d.parent === focus ? 1 : 0)
                 .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
                 .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
-        }*/
+            */
+        }
     }
-
 
     toggleGenre(genre) {
         let vis = this;
     }
-
 }
