@@ -20,14 +20,9 @@
 
  */
 
-
-
-
 // Takes data and converts it into required types
 function preprocessData(data) {
     let processedData;
-
-    // TODO STUB
 
     return processedData;
 }
