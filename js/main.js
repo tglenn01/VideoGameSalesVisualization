@@ -1,3 +1,7 @@
+d3.json('data/nestedData.json').then(data => {
+
+})
+d3.
 d3.csv('data/processed.csv').then(data => {
     // Convert columns to numerical values
     data.forEach(d => {
@@ -11,7 +15,6 @@ d3.csv('data/processed.csv').then(data => {
 
     let processedData = preprocessData(data)
 
-
     let bubbles = new Bubbles({
         parentElement: '#vis',
     }, processedData)
@@ -24,7 +27,6 @@ d3.csv('data/processed.csv').then(data => {
     let radialPlot = new RadialPlot({
         parentElement: '#vis',
     }, processedData)
-
 
 });
 

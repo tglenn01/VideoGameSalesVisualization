@@ -49,12 +49,22 @@ class Bubbles {
 
     updateVis() {
         let vis = this;
+
         vis.renderVis();
     }
 
 
     renderVis() {
         let vis = this;
+
+        // Compute the layout
+        const pack = data => d3.pack()
+            .size([vis.width, vis.height])
+            .padding(3)
+            (d3.hierarchy(data)
+                .sum(d => d.value)
+                .sort((a, b) => b.value - a.value));
+        const root = pack(data);
 
         // Append the nodes
         const node = vis.svg.append('g')
