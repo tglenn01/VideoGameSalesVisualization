@@ -1,8 +1,12 @@
-d3.json('data/nestedData.json').then(data => {
-
+// Load json data
+d3.json('data/output3.json').then(data => {
+    let bubbles = new Bubbles({
+        parentElement: '#vis',
+    }, data)
 })
-d3.
-d3.csv('data/processed.csv').then(data => {
+
+
+d3.csv('data/processed1.csv').then(data => {
     // Convert columns to numerical values
     data.forEach(d => {
         Object.keys(d).forEach((attr => {
@@ -15,10 +19,7 @@ d3.csv('data/processed.csv').then(data => {
 
     let processedData = preprocessData(data)
 
-    let bubbles = new Bubbles({
-        parentElement: '#vis',
-    }, processedData)
-    bubbles.updateVis();
+
 
     let whiskerChart = new WhiskerChart({
         parentElement: '#vis',

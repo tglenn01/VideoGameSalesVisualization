@@ -45,6 +45,8 @@ class Bubbles {
             .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`);
 
         // Todo: Append Axis title
+
+        vis.updateVis();
     }
 
     updateVis() {
@@ -57,27 +59,61 @@ class Bubbles {
     renderVis() {
         let vis = this;
 
+        // Create the pack layout.
+        const pack = d3.pack()
+            .size([vis.width, vis.height])
+            .padding(3);
+
+        // Compute the hierarchy from the JSON data; recursively sum the
+        // values for each node; sort the tree by descending value; lastly
+        // apply the pack layout.
+        const root = pack(d3.hierarchy(vis.data)
+            .sum(d => d.Global_Sales)
+            .sort((a, b) => b.Global_Sales - a.Global_Sales));
+
+        console.log(root);
+        console.log(root.descendants())
+
+        //Add nodes
+        const node = vis.svg.append("g")
+            .selectAll()
+            .data(root.descendants())
+            .join("g")
+            .attr("transform", d => `translate(${d.x},${d.y})`);
+
+        // Add a filled or stroked circle.
+        node.append("circle")
+            .attr("fill", d => d.children ? "#fff" : "#ddd")
+            .attr("stroke", d => d.children ? "#bbb" : null)
+            .attr("r", d => d.r);
+
+
+
+
+        /*
         // Compute the layout
         const pack = data => d3.pack()
             .size([vis.width, vis.height])
             .padding(3)
-            (d3.hierarchy(data)
-                .sum(d => d.value)
-                .sort((a, b) => b.value - a.value));
-        const root = pack(data);
+            (d3.hierarchy(vis.data)
+                .sum(d => d.Global_Sales)
+                .sort((a, b) => b.Global_Sales - a.Global_Sales));
+        const root = pack(vis.data);
 
         // Append the nodes
         const node = vis.svg.append('g')
             .selectAll("circle")
-            .data(root.descendants().slice(1))
+            .data(root.descendants())
             .join("circle")
-            .attr("fill", d => d.children ? color(d.depth) : "white")
-            .attr("pointer-events", d => !d.children ? "none" : null)
+            //.attr("fill", d => d.children ? vis.colorScale(d.depth) : "white")
+            .attr("pointer-events", d => Object.keys(d).length > 0 ? "none" : null)
             .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
             .on("mouseout", function() { d3.select(this).attr("stroke", null); })
-            .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
+            //.on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
+            */
 
-        // Append the text labels.
+
+        /*// Append the text labels.
         const label = vis.svg.append("g")
             .style("font", "10px sans-serif")
             .attr("pointer-events", "none")
@@ -98,7 +134,7 @@ class Bubbles {
         zoomTo([focus.x, focus.y, focus.r * 2]);
 
         function zoomTo(v) {
-            const k = width / v[2];
+            const k = vis.width / v[2];
 
             view = v;
 
@@ -112,7 +148,7 @@ class Bubbles {
 
             focus = d;
 
-            const transition = svg.transition()
+            const transition = vis.svg.transition()
                 .duration(event.altKey ? 7500 : 750)
                 .tween("zoom", d => {
                     const i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2]);
@@ -125,7 +161,7 @@ class Bubbles {
                 .style("fill-opacity", d => d.parent === focus ? 1 : 0)
                 .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
                 .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
-        }
+        }*/
     }
 
 
