@@ -1,5 +1,5 @@
 // Load json data
-d3.json('data/output3.json').then(data => {
+d3.json('data/output.json').then(data => {
     let bubbles = new Bubbles({
         parentElement: '#vis',
     }, data)
