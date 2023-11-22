@@ -1,29 +1,24 @@
-let scatterplot, data;
-d3.csv("data/processed2.csv").then((_data) => {
-  // Convert columns to numerical values
-  data = _data;
-  data.forEach((d) => {
-    Object.keys(d).forEach((attr) => {
-      if (
-        attr != "Name" &&
-        attr != "Platform" &&
-        attr != "Genre" &&
-        attr != "Publisher" &&
-        attr != "Developer" &&
-        attr != "Rating"
-      ) {
-        d[attr] = +d[attr];
-      }
-    });
-  });
+// Load json data
+d3.json('data/output2.json').then(data => {
+    let bubbles = new Bubbles({
+        parentElement: '#vis',
+    }, data)
+    let brush = new Brush({
+        parentElement: '#vis',
+    }, data)
+})
 
-  let processedData = data;
-  let bubbles = new Bubbles(
-    {
-      parentElement: "#vis",
-    },
-    processedData
-  );
+
+let scatterplot, data;
+d3.dsv(";", 'data/processed.csv').then(data => {
+
+    let processedData = preprocessData(data)
+
+    data = processedData;
+
+    let bubbles = new Bubbles({
+        parentElement: '#vis',
+    }, processedData)
 
   let whiskerChart = new WhiskerChart(
     {
