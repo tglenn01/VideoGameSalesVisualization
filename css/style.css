@@ -4,7 +4,7 @@ body {
 }
 .container {
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
 }
 #footer {
   font-size: 11px;
@@ -134,70 +134,47 @@ h1 {
   background: #e6beff;
 }
 .box {
-    opacity: 0.8;
-    fill: aliceblue;
-    stroke-width: 5;
+  opacity: 0.8;
+  fill: aliceblue;
+  stroke-width: 5;
 }
 
 .box-outline {
-    stroke: #000435;
-    stroke-width: 5;
+  stroke: #000435;
+  stroke-width: 5;
 }
 
 .box-backdrop {
-    fill: #000435;
+  fill: #000435;
 }
 
 .whisker {
-    stroke-width: 3;
+  stroke-width: 3;
 }
 
 .whisker-outline {
-    stroke-width: 5;
-    stroke: #000435;
+  stroke-width: 5;
+  stroke: #000435;
 }
 
 .y-tick {
-    font-size: 16px;
-
+  font-size: 16px;
 }
 
 .x-tick {
-    font-weight: bold;
-    font-size: 32px;
-    color: #d92323;
-    stroke-width: 1;
-    stroke: #732424;
-
+  font-weight: bold;
+  font-size: 32px;
+  color: #d92323;
+  stroke-width: 1;
+  stroke: #732424;
 }
 
 .whisker-plot-chart {
-    outline: thin solid grey;
-    outline-width: 15px;
-    outline-offset: 15px;
+  outline: thin solid grey;
+  outline-width: 15px;
+  outline-offset: 15px;
 }
-/* Tooltip */
-#tooltip {
-    position: absolute;
-    display: none;
-    background: #fff;
-    box-shadow: 3px 3px 3px 0px rgb(92 92 92 / 0.5);
-    border: 1px solid #ddd;
-    font-size: 12px;
-    font-weight: 500;
-    padding: 8px;
-    min-width: 160px;
-    color: #333;
-}
-.tooltip-title {
-    color: #000;
-    font-size: 14px;
-    font-weight: 600;
-}
-#tooltip ul {
-    margin: 5px 0 0 0;
-    padding-left: 20px;
-}
+
 circle.child {
-    pointer-events: none;
+  pointer-events: none;
 }
