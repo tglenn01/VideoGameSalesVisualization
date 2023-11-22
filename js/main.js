@@ -1,5 +1,5 @@
 // Load json data
-d3.json('data/output.json').then(data => {
+d3.json('data/output2.json').then(data => {
     let bubbles = new Bubbles({
         parentElement: '#vis',
     }, data)
@@ -19,8 +19,6 @@ d3.csv('data/processed1.csv').then(data => {
 
     let processedData = preprocessData(data)
 
-
-
     let whiskerChart = new WhiskerChart({
         parentElement: '#vis',
     }, processedData)
@@ -30,5 +28,3 @@ d3.csv('data/processed1.csv').then(data => {
     }, processedData)
 
 });
-
-// Todo: Turn developer into an array!

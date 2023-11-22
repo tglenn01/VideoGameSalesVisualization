@@ -4,8 +4,8 @@ class Bubbles {
     constructor(_config, data) {
         this.config = {
             parentElement: _config.parentElement,
-            containerWidth: 900,
-            containerHeight:900,
+            containerWidth: 800,
+            containerHeight: 800,
             margin: {
                 top: 30,
                 right: 30,
@@ -34,7 +34,7 @@ class Bubbles {
 
         // Define size of SVG drawing area
         vis.svg = d3.select(vis.config.parentElement).append('svg')
-            .attr("viewBox", `-${vis.config.containerWidth / 2} -${vis.config.containerHeight / 2} 
+            .attr("viewBox", `-${vis.config.containerWidth / 2} -${vis.config.containerHeight / 2}
             ${vis.config.containerWidth} ${vis.config.containerHeight}`)
             .attr('width', vis.config.containerWidth)
             .attr('height', vis.config.containerHeight)
@@ -74,23 +74,31 @@ class Bubbles {
             .join("circle")
             .attr("fill", d => d.children ? vis.colorScale(d.depth) : "white")
             .attr("pointer-events", d => !d.children ? "none" : null)
-            .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
-            .on("mouseout", function() { d3.select(this).attr("stroke", null); })
+            .on("mouseover", function () {
+                d3.select(this).attr("stroke", "#000");
+            })
+            .on("mouseout", function () {
+                d3.select(this).attr("stroke", null);
+            })
             .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
 
-        // Add a label to leaf nodes.
-        const text = node
-            .filter(d => !d.children && d.r > 10)
-            .append("text")
-            .attr("clip-path", d => `circle(${d.r})`);
+        const label = vis.svg.append("g")
+            .style("font", "10px sans-serif")
+            .attr("pointer-events", "none")
+            .attr("text-anchor", "middle")
+            .selectAll("text")
+            .data(root.descendants())
+            .join("text")
+            .style("fill-opacity", d => d.parent === root ? 1 : 0)
+            .style("display", d => d.parent === root ? "inline" : "none")
 
         // Add a tspan for each CamelCase-separated word.
-        text.selectAll()
-            .data(d => d.data.Name.split(/(?=[A-Z][a-z])|\s+/g))
+        label.selectAll()
+            .data(d => d.data.name.split(/(?=[A-Z][a-z])|\s+/g))
             .join("tspan")
             .attr("x", 0)
             .attr("y", (d, i, nodes) => `${i - nodes.length / 2 + 0.35}em`)
-            .text(d => d.Name);
+            .text(d => d);
 
         vis.svg.on("click", (event) => zoom(event, root));
         let focus = root;
@@ -102,7 +110,7 @@ class Bubbles {
 
             view = v;
 
-            //label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
+            label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
             node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
             node.attr("r", d => d.r * k);
         }
@@ -119,15 +127,42 @@ class Bubbles {
                     return t => zoomTo(i(t));
                 });
 
-            /*
+
             label
                 .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
                 .transition(transition)
                 .style("fill-opacity", d => d.parent === focus ? 1 : 0)
-                .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+                // The r > x value determines how small of a node still gets a label
+                .on("start", function(d) { if (d.parent === focus && d.r > 1.5) this.style.display = "inline"; })
                 .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
-            */
+
         }
+
+
+        // Todo: Add tooltips
+        /*
+        node
+            .on('mouseover', (event, d) => {
+                if (!d.children) {
+                    d3.select('#tooltip')
+                        .style('display', 'block')
+                        .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')
+                        .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+                        .html(`
+                          <div class="tooltip-title">${d.Name}</div>
+                          <div><i>${d.Publisher}, ${d.Year_of_Release}</i></div>
+                          <ul>
+                            <li>Global Sales: ${d.Global_Sales}</li>
+                            <li>Developer(s): ${d.Developers} years</li>
+                            <li>ESRB Rating: ${d.Rating}</li>
+                          </ul>
+                        `);
+                }
+            })
+            .on('mouseleave', () => {
+                d3.select('#tooltip').style('display', 'none');
+            });
+         */
     }
 
     toggleGenre(genre) {
