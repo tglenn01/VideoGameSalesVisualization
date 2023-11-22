@@ -73,7 +73,7 @@ class Bubbles {
             .data(root.descendants())
             .join("circle")
             .attr("fill", d => d.children ? vis.colorScale(d.depth) : "white")
-            .attr("pointer-events", d => !d.children ? "none" : null)
+            .attr("pointer-events", d => !d.children ? "auto" : null)
             .on("mouseover", function () {
                 d3.select(this).attr("stroke", "#000");
             })
@@ -138,31 +138,29 @@ class Bubbles {
 
         }
 
-
-        // Todo: Add tooltips
-        /*
-        node
+        // Tooltip event listeners
+        node.filter(d => !d.children)
             .on('mouseover', (event, d) => {
-                if (!d.children) {
-                    d3.select('#tooltip')
-                        .style('display', 'block')
-                        .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')
-                        .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
-                        .html(`
-                          <div class="tooltip-title">${d.Name}</div>
-                          <div><i>${d.Publisher}, ${d.Year_of_Release}</i></div>
-                          <ul>
-                            <li>Global Sales: ${d.Global_Sales}</li>
-                            <li>Developer(s): ${d.Developers} years</li>
-                            <li>ESRB Rating: ${d.Rating}</li>
-                          </ul>
-                        `);
-                }
+                console.log(d.data);
+                d3.select('#tooltip')
+                    .style('display', 'block')
+                    .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')
+                    .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+                    .html(`
+              <div class="tooltip-title">${d.data.name}</div>
+              <div><i>${d.data.Publisher}, ${d.data.Year_of_Release}</i></div>
+              <ul>
+                <li>Global Sales: ${d.data.Global_Sales}</li>
+                <li>Critic Score: ${d.data.Critic_Score}</li>
+                <li>User Score: ${d.data.User_Score}</li>
+                <li>ESRB Rating: ${d.data.Rating}</li>
+                <li>Developers: ${d.data.Developers}</li>
+              </ul>
+            `);
             })
             .on('mouseleave', () => {
                 d3.select('#tooltip').style('display', 'none');
             });
-         */
     }
 
     toggleGenre(genre) {

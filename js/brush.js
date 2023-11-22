@@ -38,23 +38,39 @@ class Brush {
         vis.yAxisFocus = d3.axisLeft(vis.yScaleFocus).ticks(0);
 
         // Define size of SVG drawing area
-        vis.svg = d3.select(vis.config.parentElement)
+        vis.svg = d3.select(vis.config.parentElement).append("svg")
             .attr('width', vis.width)
             .attr('height', vis.height);
 
-            const brush = d3.brushX()
-            .extent([[margin.left, margin.top], [width - margin.right, height - margin.bottom]])
+        vis.brush = d3.brushX()
+            .extent([[vis.config.margin.left, vis.config.margin.top], [vis.width, vis.config.contextHeight]])
             .on("start brush end", brushed);
 
         vis.svg.append("g")
-            .call(xAxisContext);
+            .call(vis.xAxisContext);
 
         vis.svg.append("g")
-            .call(brush)
-            .call(brush.move, [0.3, 0.5].map(x));
+            .call(vis.brush)
+            .call(vis.brush.move, [new Date('2000-01-01'), new Date('2016-01-01')].map(this.xScaleContext));
 
         function brushed({selection}) {
-          d3.select(this).call(brushHandle, selection);
+            d3.select(this).call(brushHandle, selection);
+        }
+
+        function brushHandle(g, selection) {
+            g.selectAll(".handle--custom")
+                .data([{type: "w"}, {type: "e"}])
+                .join(
+                    enter => enter.append("path")
+                        .attr("class", "handle--custom")
+                        .attr("fill", "#666")
+                        .attr("fill-opacity", 0.8)
+                        .attr("stroke", "#000")
+                        .attr("stroke-width", 1.5)
+                        .attr("cursor", "ew-resize")
+                )
+                .attr("display", selection === null ? "none" : null)
+                .attr("transform", selection === null ? null : (d, i) => `translate(${selection[i]},${(vis.height + vis.config.margin.top - vis.config.margin.bottom) / 2})`)
         }
 
         vis.updateVis();
@@ -82,16 +98,7 @@ class Brush {
 
         // Update the brush and define a default position
         const defaultBrushSelection = [vis.xScaleFocus(new Date('2019-01-01')), vis.xScaleContext.range()[1]];
-        vis.brushG
-            .call(vis.brush)
-            .call(vis.brush.move, defaultBrushSelection);
-    }
-
-    /**
-     * React to brush events
-     */
-    brushed(selection) {
-        let vis = this;
 
     }
+
 }
