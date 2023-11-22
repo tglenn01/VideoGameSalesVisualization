@@ -15,10 +15,8 @@ d3.json("data/output2.json").then((data) => {
 });
 
 let scatterplot, data;
-d3.dsv(";", "data/processed.csv").then((data) => {
-  let processedData = preprocessData(data);
-
-  data = processedData;
+d3.dsv(";", "data/processed.csv").then((_data) => {
+  let processedData = preprocessData(_data);
 
   data = processedData;
 
@@ -51,13 +49,13 @@ d3.selectAll(".legend-btn").on("click", function () {
   d3.select(this).classed("inactive", !d3.select(this).classed("inactive"));
 
   // Check which categories are active
-  let selectedDifficulty = [];
+  let selectedGenres = [];
   d3.selectAll(".legend-btn:not(.inactive)").each(function () {
-    selectedDifficulty.push(d3.select(this).attr("data-genre"));
+    selectedGenres.push(d3.select(this).attr("data-genre"));
   });
   // Filter data accordingly and update vis
   scatterplot.data = data.filter((d) => {
-    return selectedDifficulty.includes(d.Genre);
+    return selectedGenres.includes(d.Genre);
   });
   scatterplot.updateVis();
 });
