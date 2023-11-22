@@ -1,30 +1,22 @@
-d3.csv('data/processed.csv').then(data => {
-    // Convert columns to numerical values
-    data.forEach(d => {
-        Object.keys(d).forEach((attr => {
-            if (attr != 'Name' && attr != 'Platform' && attr != 'Genre' && attr != 'Publisher'
-                && attr != 'Developer' && attr != 'Rating') {
-                d[attr] = +d[attr];
-            }
-        }))
-    });
+d3.dsv(";", 'data/processed.csv').then(data => {
 
+    // preprocess data
     let processedData = preprocessData(data)
 
-
+    // initialize Bubbles
     let bubbles = new Bubbles({
         parentElement: '#vis',
     }, processedData)
 
+    // initialize Whisker Chart
     let whiskerChart = new WhiskerChart({
         parentElement: '#vis',
     }, processedData)
 
+    // initialize 
     let radialPlot = new RadialPlot({
         parentElement: '#vis',
     }, processedData)
 
 
 });
-
-// Todo: Turn developer into an array!
