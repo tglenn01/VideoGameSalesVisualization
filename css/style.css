@@ -1,0 +1,134 @@
+body {
+  padding: 30px;
+  background: #f8f8f8;
+}
+.container {
+  width: 740px;
+  margin: 0 auto;
+}
+#footer {
+  font-size: 11px;
+  display: flex;
+}
+#footer .footer-col {
+  flex: 1;
+}
+h1 {
+  font-family: "Lora", serif;
+  font-size: 1.4rem;
+}
+.bar {
+  fill: #f38874;
+  shape-rendering: crispEdges;
+}
+.bar:hover {
+  fill: #c15f45;
+  transition: fill ease-in-out 200ms;
+}
+.axis text {
+  fill: #666;
+  font-size: 12px;
+}
+.axis path {
+  shape-rendering: crispEdges;
+  stroke: #888;
+}
+.y-axis path {
+  display: none;
+}
+.axis line {
+  display: none;
+}
+.btn {
+  font-size: 11px;
+  color: #adadad;
+}
+#sorting:hover,
+#sorting:focus {
+  text-decoration: none;
+  box-shadow: none;
+}
+#sorting img {
+  opacity: 0.8;
+}
+#tooltip {
+  position: absolute;
+  opacity: 0;
+  background: #fff;
+  box-shadow: 2px 2px 3px 0px rgb(92 92 92 / 0.5);
+  border: 1px solid #ddd;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+}
+.tooltip-label {
+  font-weight: 500;
+  font-size: 10px;
+  color: #888;
+}
+.tooltip-title {
+  color: #000;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Legend */
+.legend {
+  margin: 20px 0;
+  list-style: none;
+  padding: 0;
+}
+.legend-btn {
+  display: inline-block;
+  margin: 0 20px 0 0;
+  cursor: pointer;
+  transition: all ease-in-out 200ms;
+}
+.legend-btn:hover.legend-btn.inactive:hover {
+  opacity: 0.7;
+}
+.legend-btn.inactive {
+  opacity: 0.5;
+}
+.legend-symbol {
+  width: 12px;
+  height: 12px;
+  margin-right: 3px;
+  display: inline-block;
+}
+.legend-btn[data-genre="Puzzle"] .legend-symbol {
+  background: #e6194b;
+}
+.legend-btn[data-genre="Action"] .legend-symbol {
+  background: #3cb44b;
+}
+.legend-btn[data-genre="Shooter"] .legend-symbol {
+  background: #ffe119;
+}
+.legend-btn[data-genre="Racing"] .legend-symbol {
+  background: #4363d8;
+}
+.legend-btn[data-genre="Strategy"] .legend-symbol {
+  background: #f58231;
+}
+.legend-btn[data-genre="Misc"] .legend-symbol {
+  background: #911eb4;
+}
+.legend-btn[data-genre="Platform"] .legend-symbol {
+  background: #46f0f0;
+}
+.legend-btn[data-genre="Role-Playing"] .legend-symbol {
+  background: #f032e6;
+}
+.legend-btn[data-genre="Sports"] .legend-symbol {
+  background: #bcf60c;
+}
+.legend-btn[data-genre="Fighting"] .legend-symbol {
+  background: #fabebe;
+}
+.legend-btn[data-genre="Adventure"] .legend-symbol {
+  background: #008080;
+}
+.legend-btn[data-genre="Simulation"] .legend-symbol {
+  background: #e6beff;
+}
