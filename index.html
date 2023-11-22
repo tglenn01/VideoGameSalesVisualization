@@ -1,15 +1,59 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>D3 Project Starter Template</title>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <link rel="icon" href="data:;base64,iVBORwOKGO=" />
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>    
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
     <!-- Add HTML content, SVG drawing area, ... -->
 
-    <div id="vis"></div>
+    <ul class="legend">
+      <li class="legend-btn" data-genre="Puzzle">
+        <span class="legend-symbol"></span> Puzzle
+      </li>
+      <li class="legend-btn" data-genre="Action">
+        <span class="legend-symbol"></span> Action
+      </li>
+      <li class="legend-btn" data-genre="Shooter">
+        <span class="legend-symbol"></span> Shooter
+      </li>
+      <li class="legend-btn" data-genre="Racing">
+        <span class="legend-symbol"></span> Racing
+      </li>
+      <li class="legend-btn" data-genre="Strategy">
+        <span class="legend-symbol"></span> Strategy
+      </li>
+      <li class="legend-btn" data-genre="Misc">
+        <span class="legend-symbol"></span> Misc
+      </li>
+      <li class="legend-btn" data-genre="Platform">
+        <span class="legend-symbol"></span> Platform
+      </li>
+      <li class="legend-btn" data-genre="Role-Playing">
+        <span class="legend-symbol"></span> Role-Playing
+      </li>
+      <li class="legend-btn" data-genre="Sports">
+        <span class="legend-symbol"></span> Sports
+      </li>
+      <li class="legend-btn" data-genre="Fighting">
+        <span class="legend-symbol"></span> Fighting
+      </li>
+      <li class="legend-btn" data-genre="Adventure">
+        <span class="legend-symbol"></span> Adventure
+      </li>
+      <li class="legend-btn" data-genre="Simulation">
+        <span class="legend-symbol"></span> Simulation
+      </li>
+    </ul>
+
+    <div class="chart-container">
+      <svg id="barchart"></svg>
+    </div>
+    <div class="chart-container">
+      <svg id="scatterplot"></svg>
+    </div>
 
     <div id="tooltip"></div>
 
@@ -23,7 +67,8 @@
     <script src="js/bubbles.js"></script>
     <script src="js/brush.js"></script>
     <script src="js/whiskerChart.js"></script>
-    <script src="js/radialPlot.js"></script>
+    <script src="js/barChart.js"></script>
+    <script src="js/scatterplot.js"></script>
     <script src="js/main.js"></script>
-</body>
+  </body>
 </html>
