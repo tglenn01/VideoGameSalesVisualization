@@ -33,7 +33,7 @@ class Bubbles {
             .interpolate(d3.interpolateHcl);
 
         // Define size of SVG drawing area
-        vis.svg = d3.select(vis.config.parentElement).append('svg')
+        vis.svg = d3.select(vis.config.parentElement)
             .attr("viewBox", `-${vis.config.containerWidth / 2} -${vis.config.containerHeight / 2}
             ${vis.config.containerWidth} ${vis.config.containerHeight}`)
             .attr('width', vis.config.containerWidth)

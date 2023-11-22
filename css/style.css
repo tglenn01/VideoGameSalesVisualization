@@ -3,8 +3,8 @@ body {
   background: #f8f8f8;
 }
 .container {
-  width: 740px;
-  margin: 0 auto;
+  display: flex;
+    flex-direction: column;
 }
 #footer {
   font-size: 11px;
@@ -147,8 +147,6 @@ h1 {
 .box-backdrop {
     fill: #000435;
 }
-
-
 
 .whisker {
     stroke-width: 3;

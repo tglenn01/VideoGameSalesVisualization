@@ -2,13 +2,13 @@
 d3.json("data/output2.json").then((data) => {
   let bubbles = new Bubbles(
     {
-      parentElement: "#vis",
+      parentElement: "#bubbles",
     },
     data
   );
   let brush = new Brush(
     {
-      parentElement: "#vis",
+      parentElement: "#brush",
     },
     data
   );
@@ -20,12 +20,7 @@ d3.dsv(";", "data/processed.csv").then((data) => {
 
   data = processedData;
 
-  let bubbles = new Bubbles(
-    {
-      parentElement: "#vis",
-    },
-    processedData
-  );
+  data = processedData;
 
   let whiskerChart = new WhiskerChart(
     {
@@ -48,6 +43,7 @@ d3.dsv(";", "data/processed.csv").then((data) => {
     processedData
   );
   scatterplot.updateVis();
+  whiskerChart.initVis();
 });
 
 d3.selectAll(".legend-btn").on("click", function () {

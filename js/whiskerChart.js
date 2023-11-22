@@ -63,7 +63,7 @@ class WhiskerChart {
         })
 
         console.log(vis.genresData)
-        vis.initVis()
+        //vis.initVis()
     }
 
 
