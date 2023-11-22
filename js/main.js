@@ -3,6 +3,9 @@ d3.json('data/output2.json').then(data => {
     let bubbles = new Bubbles({
         parentElement: '#vis',
     }, data)
+    let brush = new Brush({
+        parentElement: '#vis',
+    }, data)
 })
 
 
