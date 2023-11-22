@@ -1,0 +1,45 @@
+.box {
+    opacity: 0.8;
+    fill: aliceblue;
+    stroke-width: 5;
+}
+
+.box-outline {
+    stroke: #000435;
+    stroke-width: 5;
+}
+
+.box-backdrop {
+    fill: #000435;
+}
+
+
+
+.whisker {
+    stroke-width: 3;
+}
+
+.whisker-outline {
+    stroke-width: 5;
+    stroke: #000435;
+}
+
+.y-tick {
+    font-size: 16px;
+
+}
+
+.x-tick {
+    font-weight: bold;
+    font-size: 32px;
+    color: #d92323;
+    stroke-width: 1;
+    stroke: #732424;
+
+}
+
+.whisker-plot-chart {
+    outline: thin solid grey;
+    outline-width: 15px;
+    outline-offset: 15px;
+}
