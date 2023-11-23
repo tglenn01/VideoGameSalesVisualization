@@ -158,11 +158,19 @@ h1 {
   float: right;
 }
 
+#bubbles {
+  float: right;
+}
+
 #barchart{
   float: right;
 }
 
 #scatterplot{
+  float: left;
+}
+
+#whisker-plot{
   float: left;
 }
 
