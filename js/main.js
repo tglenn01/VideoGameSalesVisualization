@@ -21,7 +21,7 @@ d3.dsv(";", "data/processed.csv").then((_data) => {
 
   let whiskerChart = new WhiskerChart(
     {
-      parentElement: "#vis",
+      parentElement: "#whisker",
     },
     processedData
   );
