@@ -4,9 +4,9 @@ class WhiskerChart {
         this.config = {
             parentElement: _config.parentElement,
             containerWidth: 900,
-            containerHeight: 950,
+            containerHeight: 840,
             margin: {
-                top: 150,
+                top: 40,
                 right: 150,
                 bottom: 150,
                 left: 150

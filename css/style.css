@@ -154,6 +154,18 @@ h1 {
   stroke-width: 3;
 }
 
+#brush{
+  float: right;
+}
+
+#barchart{
+  float: right;
+}
+
+#scatterplot{
+  float: left;
+}
+
 .y-tick {
   font-size: 16px;
 }

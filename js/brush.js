@@ -4,10 +4,10 @@ class Brush {
         this.config = {
             parentElement: _config.parentElement,
             containerWidth:  800,
-            containerHeight: 240,
+            containerHeight: 60,
             contextHeight: 50,
-            margin: {top: 10, right: 10, bottom: 100, left: 10},
-            contextMargin: {top: 280, right: 10, bottom: 20, left: 45}
+            margin: {top: 10, right: 10, bottom: 10, left: 10},
+            contextMargin: {top: 10, right: 10, bottom: 10, left: 10}
         }
         this.data = _data;
         this.bubbles = bubbles;
