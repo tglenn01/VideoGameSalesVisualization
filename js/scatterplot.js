@@ -48,18 +48,18 @@ class Scatterplot {
     vis.colorScale = d3
       .scaleOrdinal()
       .range([
-        "#e6194b", // red
-        "#3cb44b", // green
-        "#ffe119", // yellow
-        "#4363d8", // blue
-        "#f58231", // orange
-        "#911eb4", // purple
-        "#46f0f0", // cyan
-        "#f032e6", // magenta
-        "#bcf60c", // lime
-        "#fabebe", // pink
-        "#008080", // teal
-        "#e6beff", // lavender
+        "#ff0000", // red for Puzzle
+        "#2f4f4f", // darkslategray for Action
+        "#00ffff", // aqua for Shooter
+        "#ffff00", // yellow for Racing
+        "#eee8aa", // palegoldenrod for Strategy
+        "#ff69b4", // hotpink for Misc
+        "#000080", // navy for Platformer
+        "#00ff00", // lime for Role-Playing
+        "#1e90ff", // dodgerblue for Sports
+        "#008000", // green for Fighting
+        "#8b4513", // saddlebrown for Adventure
+        "#ff00ff", // fuchsia for Simulation
       ])
       .domain([
         "Puzzle",
@@ -68,7 +68,7 @@ class Scatterplot {
         "Racing",
         "Strategy",
         "Misc",
-        "Platform",
+        "Platformer",
         "Role-Playing",
         "Sports",
         "Fighting",
