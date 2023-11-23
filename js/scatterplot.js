@@ -78,7 +78,7 @@ class Scatterplot {
 
     vis.xScale = d3.scaleLinear().range([0, vis.width]);
 
-    vis.yScale = d3.scaleLinear().range([vis.height, 0]);
+    vis.yScale = d3.scaleLog().range([vis.height, 0]).clamp(true);
 
     // Initialize axes
     vis.xAxis = d3
@@ -149,7 +149,9 @@ class Scatterplot {
 
     // Set the scale input domains
     vis.xScale.domain([0, d3.max(vis.data, vis.xValue)]);
-    vis.yScale.domain([0, d3.max(vis.data, vis.yValue)]);
+    const minYValue =
+      d3.min(vis.data, vis.yValue) > 0 ? d3.min(vis.data, vis.yValue) : 1;
+    vis.yScale.domain([minYValue, d3.max(vis.data, vis.yValue)]);
 
     vis.renderVis();
   }
@@ -184,11 +186,11 @@ class Scatterplot {
                 <ul>
                   <li>User Score: ${d.User_Score}</li>
                   <li>Critic Score: ${d.Critic_Score}</li>
-                  <li>Global Sales: ${d.Global_Sales}</li>
-                  <li>North America Sales: ${d.NA_Sales}</li>
-                  <li>European Union Sales: ${d.EU_Sales}</li>
-                  <li>Japan Sales: ${d.JP_Sales}</li>
-                  <li>Other Sales: ${d.Other_Sales}</li>
+                  <li>Global Sales: ${d.Global_Sales} Million</li>
+                  <li>North America Sales: ${d.NA_Sales} Million</li>
+                  <li>European Union Sales: ${d.EU_Sales} Million</li>
+                  <li>Japan Sales: ${d.JP_Sales} Million</li>
+                  <li>Other Sales: ${d.Other_Sales} Million</li>
                 </ul>
               `);
       })
