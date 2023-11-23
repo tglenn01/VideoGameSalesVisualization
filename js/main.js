@@ -10,7 +10,7 @@ d3.json("data/output2.json").then((data) => {
     {
       parentElement: "#brush",
     },
-    data
+    data, bubbles
   );
 });
 
