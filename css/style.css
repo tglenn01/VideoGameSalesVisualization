@@ -154,6 +154,26 @@ h1 {
   stroke-width: 3;
 }
 
+#brush{
+  float: right;
+}
+
+#bubbles {
+  float: right;
+}
+
+#barchart{
+  float: right;
+}
+
+#scatterplot{
+  float: left;
+}
+
+#whisker-plot{
+  float: left;
+}
+
 .y-tick {
   font-size: 16px;
 }

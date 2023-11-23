@@ -189,7 +189,14 @@ class Bubbles {
       });
   }
 
-  toggleGenre(genre) {
-    let vis = this;
-  }
+    toggleGenre(genre) {
+        let vis = this;
+    }
+
+    updateSelection(selection) {
+        let vis = this;
+
+        //Todo: Implement updating after brush select.
+
+    }
 }
