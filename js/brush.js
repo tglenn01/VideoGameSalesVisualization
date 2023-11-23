@@ -59,6 +59,7 @@ class Brush {
             d3.select(this).call(brushHandle, selection);
         }
 
+        // Adds brush handle and its listeners.
         function brushHandle(g, selection) {
             g.selectAll(".handle--custom")
                 .data([{type: "w"}, {type: "e"}])
@@ -73,7 +74,6 @@ class Brush {
                 )
                 .attr("display", selection === null ? "none" : null)
                 .attr("transform", selection === null ? null : (d, i) => `translate(${selection[i]},${(vis.config.contextHeight + vis.config.margin.top - vis.config.margin.bottom) / 2})`);
-                console.log(selection.map(vis.xScaleContext.invert));
 
                 vis.updateSelection(selection.map(vis.xScaleContext.invert));
         }

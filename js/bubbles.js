@@ -54,7 +54,6 @@ class Bubbles {
 
     }
 
-
     renderVis() {
         let vis = this;
 
@@ -76,12 +75,6 @@ class Bubbles {
             .data(root.descendants())
             .join("circle")
             .attr("fill", d => d.children ? vis.colorScale(d.depth) : "white")
-            // .attr("class", d => (!d.children &&
-            //                         vis.selection != null &&
-            //                         d.Year_of_Release >= vis.selection[0].getFullYear() &&
-            //                         d.Year_of_Release <= vis.selection[1].getFullYear()) ||
-            //                       vis.selection == null
-            //                       ? "active" : "inactive")
             .attr("pointer-events", d => !d.children ? "auto" : null)
             .on("mouseover", function () {
                 d3.select(this).attr("stroke", "#000");
@@ -150,7 +143,6 @@ class Bubbles {
         // Tooltip event listeners
         node.filter(d => !d.children)
             .on('mouseover', (event, d) => {
-                console.log(d.data);
                 d3.select('#tooltip')
                     .style('display', 'block')
                     .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')
@@ -178,25 +170,8 @@ class Bubbles {
 
     updateSelection(selection) {
         let vis = this;
-        // vis.selection = selection;
-        // console.log(vis.originalData);
-        //
-        // if (selection != null) {
-        //     let filteredData = [];
-        //     // The variable names are assumed using default settings
-        //     vis.originalData.children.forEach((platform) => {
-        //         platform.children.forEach((genre) => {
-        //             filteredData.push(genre.children.filter(d => (!d.children &&
-        //                                 d.Year_of_Release >= vis.selection[0].getFullYear() &&
-        //                                 d.Year_of_Release <= vis.selection[1].getFullYear())));
-        //         });
-        //     });
-        //     vis.data = filteredData;
-        // } else {
-        //     vis.data = vis.originalData;
-        // }
-        // console.log(vis.data);
-        //vis.updateVis();
+
+        //Todo: Implement updating after brush select.
 
     }
 }
