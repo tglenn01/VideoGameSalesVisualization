@@ -154,12 +154,12 @@ h1 {
   stroke-width: 3;
 }
 
-#brush{
-  float: right;
-}
+/*#brush{*/
+/*  float: right;*/
+/*}*/
 
 #bubbles {
-  float: right;
+  float: left;
 }
 
 #barchart{
@@ -170,18 +170,30 @@ h1 {
   float: left;
 }
 
-#whisker-plot{
-  float: left;
-}
+/*#whisker-plot{*/
+/*  float: right;*/
+/*}*/
 
 .y-tick {
   font-size: 16px;
+
 }
 
 .x-tick {
-  font-size: 16px;
-  fill: #666;
+  font-weight: bold;
+  font-size: 32px;
+  color: #d92323;
+  stroke-width: 1;
+  stroke: #732424;
+
 }
+
+.chart-outline {
+  outline: thin solid grey;
+  outline-width: 5px;
+  outline-offset: 15px;
+}
+/* Tooltip */
 
 circle.child {
   pointer-events: none;

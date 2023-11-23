@@ -61,9 +61,6 @@ class WhiskerChart {
         vis.genresData.forEach(genre => {
             genre['variance'] = genre['variance'] / genre['esrbN'];
         })
-
-        console.log(vis.genresData)
-        //vis.initVis()
     }
 
 
@@ -97,7 +94,7 @@ class WhiskerChart {
         vis.chartArea = vis.svg.append('g')
             .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`);
 
-        vis.border = vis.chartArea.attr("class", "whisker-plot-chart")
+        vis.border = vis.chartArea.attr("class", "chart-outline")
 
 
         vis.genreGroups = vis.chartArea.selectAll('g')
