@@ -1,23 +1,22 @@
 // Load json data
-d3.json("data/output2.json").then((data) => {
+d3.json("data/output2.json").then((_data) => {
   let bubbles = new Bubbles(
     {
       parentElement: "#bubbles",
     },
-    data
+    _data
   );
   let brush = new Brush(
     {
       parentElement: "#brush",
     },
-    data, bubbles
+    _data,
+    bubbles
   );
 });
 
 d3.dsv(";", "data/processed.csv").then((_data) => {
   let processedData = preprocessData(_data);
-
-  data = processedData;
 
   let whiskerChart = new WhiskerChart(
     {
