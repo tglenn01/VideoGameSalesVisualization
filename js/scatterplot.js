@@ -201,5 +201,8 @@ class Scatterplot {
     vis.xAxisG.call(vis.xAxis).call((g) => g.select(".domain").remove());
 
     vis.yAxisG.call(vis.yAxis).call((g) => g.select(".domain").remove());
+
+    //outline
+    vis.border = vis.svg.attr("class", "chart-outline");
   }
 }
