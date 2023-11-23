@@ -186,3 +186,18 @@ h1 {
 circle.child {
   pointer-events: none;
 }
+/* Marks */
+.point {
+
+}
+.point.inactive {
+  opacity: 0.3;
+}
+
+.label {
+  opacity: 1;
+}
+
+.label.inactive {
+  opacity: 0;
+}
