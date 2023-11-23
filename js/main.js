@@ -14,7 +14,6 @@ d3.json("data/output2.json").then((data) => {
   );
 });
 
-let scatterplot, data;
 d3.dsv(";", "data/processed.csv").then((_data) => {
   let processedData = preprocessData(_data);
 
@@ -26,7 +25,29 @@ d3.dsv(";", "data/processed.csv").then((_data) => {
     },
     processedData
   );
+  whiskerChart.initVis();
+});
 
+let scatterplot, data;
+d3.csv("data/processed2.csv").then((_data) => {
+  // Convert columns to numerical values
+  data = _data;
+  data.forEach((d) => {
+    Object.keys(d).forEach((attr) => {
+      if (
+        attr != "Name" &&
+        attr != "Platform" &&
+        attr != "Genre" &&
+        attr != "Publisher" &&
+        attr != "Developer" &&
+        attr != "Rating"
+      ) {
+        d[attr] = +d[attr];
+      }
+    });
+  });
+
+  let processedData = data;
   let barChart = new Barchart(
     {
       parentElement: "#barchart",
@@ -41,7 +62,6 @@ d3.dsv(";", "data/processed.csv").then((_data) => {
     processedData
   );
   scatterplot.updateVis();
-  whiskerChart.initVis();
 });
 
 d3.selectAll(".legend-btn").on("click", function () {
