@@ -25,6 +25,7 @@ class Scatterplot {
 
       return { ...d, Average_Score: averageScore };
     });
+    this.selectedGenre = null;
     this.initVis();
   }
 
@@ -162,16 +163,22 @@ class Scatterplot {
   renderVis() {
     let vis = this;
 
-    // Add circles
+    // Add or update circles
     const circles = vis.chart
       .selectAll(".point")
-      .data(vis.data, (d) => d.trail)
+      .data(vis.data, (d) => d.Name)
       .join("circle")
       .attr("class", "point")
       .attr("r", 4)
       .attr("cy", (d) => vis.yScale(vis.yValue(d)))
       .attr("cx", (d) => vis.xScale(vis.xValue(d)))
-      .attr("fill", (d) => vis.colorScale(vis.colorValue(d)));
+      .attr("fill", (d) => {
+        return vis.selectedGenre !== null && d.Genre === vis.selectedGenre
+          ? vis.colorScale(d.Genre)
+          : "#d3d3d3";
+      })
+      .style("opacity", 0.3);
+    // .attr("fill", (d) => vis.colorScale(vis.colorValue(d)));
 
     // Tooltip event listeners
     circles
