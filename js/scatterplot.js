@@ -4,7 +4,7 @@ class Scatterplot {
    * @param {Object}
    * @param {Array}
    */
-  constructor(_config, _data) {
+  constructor(_config, _data, _salesMetric) {
     this.config = {
       parentElement: _config.parentElement,
       containerWidth: _config.containerWidth || 600,
@@ -26,6 +26,7 @@ class Scatterplot {
       return { ...d, Average_Score: averageScore };
     });
     this.selectedGenre = null;
+    this.salesMetric = _salesMetric;
     this.initVis();
   }
 
@@ -134,7 +135,7 @@ class Scatterplot {
       .attr("x", 0)
       .attr("y", 0)
       .attr("dy", ".71em")
-      .text("Sales");
+      .text(vis.salesMetric);
   }
 
   /**
@@ -146,7 +147,7 @@ class Scatterplot {
     // Specificy accessor functions
     vis.colorValue = (d) => d.Genre;
     vis.xValue = (d) => d.Average_Score;
-    vis.yValue = (d) => d.Global_Sales;
+    vis.yValue = (d) => d[vis.salesMetric];
 
     // Set the scale input domains
     vis.xScale.domain([0, d3.max(vis.data, vis.xValue)]);
