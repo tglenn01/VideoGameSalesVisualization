@@ -1,65 +1,155 @@
-// Load json data
-d3.json("data/output2.json").then((data) => {
-  let bubbles = new Bubbles(
+// Load output_genre_platform.json
+let output_genre_platform, output_genre_publisher, output_platform_genre
+let bubbles;
+d3.json("data/output_platform_genre.json").then((_data) => {
+  output_platform_genre = _data;
+  bubbles = new Bubbles(
     {
       parentElement: "#bubbles",
     },
-    data
+    _data
   );
   let brush = new Brush(
     {
       parentElement: "#brush",
     },
-    data
+    _data,
+    bubbles
   );
 });
+d3.json("data/output_genre_platform.json").then((_data) => {
+  output_genre_platform = _data;
+})
+d3.json("data/output_genre_publisher.json").then((_data) => {
+  output_genre_publisher = _data;
+})
 
-let scatterplot, data;
-d3.dsv(";", "data/processed.csv").then((data) => {
-  let processedData = preprocessData(data);
-
-  data = processedData;
-
-  data = processedData;
+d3.dsv(";", "data/processed.csv").then((_data) => {
+  let processedData = preprocessData(_data);
 
   let whiskerChart = new WhiskerChart(
     {
-      parentElement: "#vis",
+      parentElement: "#whisker",
     },
     processedData
   );
-
-  let barChart = new Barchart(
-    {
-      parentElement: "#barchart",
-    },
-    processedData
-  );
-  barChart.updateVis();
-  scatterplot = new Scatterplot(
-    {
-      parentElement: "#scatterplot",
-    },
-    processedData
-  );
-  scatterplot.updateVis();
   whiskerChart.initVis();
 });
 
-d3.selectAll(".legend-btn").on("click", function () {
-  // Toggle 'inactive' class
-  d3.select(this).classed("inactive", !d3.select(this).classed("inactive"));
+let scatterplot, data;
+let scatterplots = {};
+d3.csv("data/processed2.csv").then((_data) => {
+  // Convert columns to numerical values
+  data = _data;
+  data.forEach((d) => {
+    Object.keys(d).forEach((attr) => {
+      if (
+        attr != "Name" &&
+        attr != "Platform" &&
+        attr != "Genre" &&
+        attr != "Publisher" &&
+        attr != "Developer" &&
+        attr != "Rating"
+      ) {
+        d[attr] = +d[attr];
+      }
+    });
+  });
 
-  // Check which categories are active
-  let selectedDifficulty = [];
-  d3.selectAll(".legend-btn:not(.inactive)").each(function () {
-    selectedDifficulty.push(d3.select(this).attr("data-genre"));
+  let processedData = data;
+  // let barChart = new Barchart(
+  //   {
+  //     parentElement: "#barchart",
+  //   },
+  //   processedData
+  // );
+  // barChart.updateVis();
+
+  // scatterplot = new Scatterplot(
+  //   {
+  //     parentElement: "#scatterplot",
+  //   },
+  //   processedData,
+  //   "Global_Sales"
+  // );
+  // scatterplot.updateVis();
+  const salesMetrics = [
+    "Global_Sales",
+    "NA_Sales",
+    "EU_Sales",
+    "JP_Sales",
+    "Other_Sales",
+  ];
+
+  // Create multiple scatterplot instances
+  salesMetrics.forEach((metric) => {
+    scatterplots[metric] = new Scatterplot(
+      {
+        parentElement: `#scatterplot-${metric}`,
+      },
+      processedData,
+      metric
+    );
+    scatterplots[metric].updateVis();
   });
-  // Filter data accordingly and update vis
-  scatterplot.data = data.filter((d) => {
-    return selectedDifficulty.includes(d.Genre);
-  });
-  scatterplot.updateVis();
 });
 
-// Todo: Turn developer into an array!
+// d3.selectAll(".legend-btn").on("click", function () {
+//   d3.selectAll(".legend-btn").classed("inactive", true);
+//   d3.select(this).classed("inactive", !d3.select(this).classed("inactive"));
+//   let selectedGenre = d3.select(this).attr("data-genre");
+
+//   // Update the selected genre in the scatterplot instance
+//   scatterplot.selectedGenre = selectedGenre;
+
+//   // Call updateVis to re-render the scatterplot with new color settings
+//   scatterplot.updateVis();
+// });
+
+d3.selectAll(".legend-btn").on("click", function () {
+  d3.selectAll(".legend-btn").classed("inactive", true);
+  d3.select(this).classed("inactive", false);
+  let selectedGenre = d3.select(this).attr("data-genre");
+
+  // Update the selected genre and re-render each scatterplot
+  Object.values(scatterplots).forEach((plot) => {
+    plot.selectedGenre = selectedGenre;
+    plot.updateVis();
+  });
+});
+
+// d3.selectAll(".legend-btn").on("click", function () {
+//   // Toggle 'inactive' class
+//   d3.select(this).classed("inactive", !d3.select(this).classed("inactive"));
+
+//   // Check which categories are active
+//   let selectedGenres = [];
+//   d3.selectAll(".legend-btn:not(.inactive)").each(function () {
+//     selectedGenres.push(d3.select(this).attr("data-genre"));
+//   });
+//   // Filter data accordingly and update vis
+//   scatterplot.data = data.filter((d) => {
+//     return selectedGenres.includes(d.Genre);
+//   });
+//   scatterplot.updateVis();
+// });
+
+// Select Button for bubbles dataset
+d3.select('#bubbles-input').on('change', function() {
+  // Get selected dataset
+  const selection = d3.select(this).property('value');
+
+  // Get correct dataset
+  switch(selection) {
+    case "genrePlatform":
+      bubbles.data = output_genre_platform;
+      break;
+    case "genrePublisher":
+      bubbles.data = output_genre_publisher;
+      break;
+    case "platformGenre":
+      bubbles.data = output_platform_genre;
+      break;
+  }
+  bubbles.updateVis();
+})

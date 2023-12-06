@@ -3,8 +3,9 @@ body {
   background: #f8f8f8;
 }
 .container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
 }
 #footer {
   font-size: 11px;
@@ -98,41 +99,42 @@ h1 {
 }
 
 .legend-btn[data-genre="Puzzle"] .legend-symbol {
-  background: #e6194b;
+  background: #ff0000; /* red */
 }
 .legend-btn[data-genre="Action"] .legend-symbol {
-  background: #3cb44b;
+  background: #2f4f4f; /* darkslategray */
 }
 .legend-btn[data-genre="Shooter"] .legend-symbol {
-  background: #ffe119;
+  background: #00ffff; /* aqua */
 }
 .legend-btn[data-genre="Racing"] .legend-symbol {
-  background: #4363d8;
+  background: #ffff00; /* yellow */
 }
 .legend-btn[data-genre="Strategy"] .legend-symbol {
-  background: #f58231;
+  background: #eee8aa; /* palegoldenrod */
 }
 .legend-btn[data-genre="Misc"] .legend-symbol {
-  background: #911eb4;
+  background: #ff69b4; /* hotpink */
 }
-.legend-btn[data-genre="Platform"] .legend-symbol {
-  background: #46f0f0;
+.legend-btn[data-genre="Platformer"] .legend-symbol {
+  background: #000080; /* navy */
 }
 .legend-btn[data-genre="Role-Playing"] .legend-symbol {
-  background: #f032e6;
+  background: #00ff00; /* lime */
 }
 .legend-btn[data-genre="Sports"] .legend-symbol {
-  background: #bcf60c;
+  background: #1e90ff; /* dodgerblue */
 }
 .legend-btn[data-genre="Fighting"] .legend-symbol {
-  background: #fabebe;
+  background: #008000; /* green */
 }
 .legend-btn[data-genre="Adventure"] .legend-symbol {
-  background: #008080;
+  background: #8b4513; /* saddlebrown */
 }
 .legend-btn[data-genre="Simulation"] .legend-symbol {
-  background: #e6beff;
+  background: #ff00ff; /* fuchsia */
 }
+
 .box {
   opacity: 0.8;
   fill: aliceblue;
@@ -152,13 +154,29 @@ h1 {
   stroke-width: 3;
 }
 
-.whisker-outline {
-  stroke-width: 5;
-  stroke: #000435;
+/*#brush{*/
+/*  float: right;*/
+/*}*/
+
+#bubbles {
+  float: left;
 }
+
+#barchart{
+  float: right;
+}
+
+#scatterplot{
+  float: left;
+}
+
+/*#whisker-plot{*/
+/*  float: right;*/
+/*}*/
 
 .y-tick {
   font-size: 16px;
+
 }
 
 .x-tick {
@@ -167,14 +185,31 @@ h1 {
   color: #d92323;
   stroke-width: 1;
   stroke: #732424;
+
 }
 
-.whisker-plot-chart {
+.chart-outline {
   outline: thin solid grey;
-  outline-width: 15px;
+  outline-width: 5px;
   outline-offset: 15px;
 }
+/* Tooltip */
 
 circle.child {
   pointer-events: none;
+}
+/* Marks */
+.point {
+
+}
+.point.inactive {
+  opacity: 0.3;
+}
+
+.label {
+  opacity: 1;
+}
+
+.label.inactive {
+  opacity: 0;
 }

@@ -4,9 +4,9 @@ class WhiskerChart {
         this.config = {
             parentElement: _config.parentElement,
             containerWidth: 900,
-            containerHeight: 950,
+            containerHeight: 840,
             margin: {
-                top: 150,
+                top: 40,
                 right: 150,
                 bottom: 150,
                 left: 150
@@ -61,9 +61,6 @@ class WhiskerChart {
         vis.genresData.forEach(genre => {
             genre['variance'] = genre['variance'] / genre['esrbN'];
         })
-
-        console.log(vis.genresData)
-        //vis.initVis()
     }
 
 
@@ -87,10 +84,9 @@ class WhiskerChart {
             .tickSize(-vis.height + vis.config.margin.bottom - 100);
 
         vis.yAxis = d3.axisLeft(vis.yScale)
-            .ticks(12)
-            .tickFormat(d => d.toUpperCase());
+            .ticks(12);
 
-        vis.svg = d3.select(vis.config.parentElement).append('svg')
+        vis.svg = d3.select(vis.config.parentElement)
             .attr('width', vis.config.containerWidth)
             .attr('height', vis.config.containerHeight)
             .attr('id', 'whisker-plot');
@@ -98,7 +94,7 @@ class WhiskerChart {
         vis.chartArea = vis.svg.append('g')
             .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`);
 
-        vis.border = vis.chartArea.attr("class", "whisker-plot-chart")
+        vis.border = vis.chartArea.attr("class", "chart-outline")
 
 
         vis.genreGroups = vis.chartArea.selectAll('g')

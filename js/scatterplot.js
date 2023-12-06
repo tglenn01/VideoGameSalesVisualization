@@ -4,7 +4,7 @@ class Scatterplot {
    * @param {Object}
    * @param {Array}
    */
-  constructor(_config, _data) {
+  constructor(_config, _data, _salesMetric) {
     this.config = {
       parentElement: _config.parentElement,
       containerWidth: _config.containerWidth || 600,
@@ -25,6 +25,8 @@ class Scatterplot {
 
       return { ...d, Average_Score: averageScore };
     });
+    this.selectedGenre = null;
+    this.salesMetric = _salesMetric;
     this.initVis();
   }
 
@@ -48,18 +50,18 @@ class Scatterplot {
     vis.colorScale = d3
       .scaleOrdinal()
       .range([
-        "#e6194b", // red
-        "#3cb44b", // green
-        "#ffe119", // yellow
-        "#4363d8", // blue
-        "#f58231", // orange
-        "#911eb4", // purple
-        "#46f0f0", // cyan
-        "#f032e6", // magenta
-        "#bcf60c", // lime
-        "#fabebe", // pink
-        "#008080", // teal
-        "#e6beff", // lavender
+        "#ff0000", // red for Puzzle
+        "#2f4f4f", // darkslategray for Action
+        "#00ffff", // aqua for Shooter
+        "#ffff00", // yellow for Racing
+        "#eee8aa", // palegoldenrod for Strategy
+        "#ff69b4", // hotpink for Misc
+        "#000080", // navy for Platformer
+        "#00ff00", // lime for Role-Playing
+        "#1e90ff", // dodgerblue for Sports
+        "#008000", // green for Fighting
+        "#8b4513", // saddlebrown for Adventure
+        "#ff00ff", // fuchsia for Simulation
       ])
       .domain([
         "Puzzle",
@@ -68,7 +70,7 @@ class Scatterplot {
         "Racing",
         "Strategy",
         "Misc",
-        "Platform",
+        "Platformer",
         "Role-Playing",
         "Sports",
         "Fighting",
@@ -78,7 +80,7 @@ class Scatterplot {
 
     vis.xScale = d3.scaleLinear().range([0, vis.width]);
 
-    vis.yScale = d3.scaleLinear().range([vis.height, 0]);
+    vis.yScale = d3.scaleLog().range([vis.height, 0]).clamp(true);
 
     // Initialize axes
     vis.xAxis = d3
@@ -133,7 +135,7 @@ class Scatterplot {
       .attr("x", 0)
       .attr("y", 0)
       .attr("dy", ".71em")
-      .text("Sales");
+      .text(vis.salesMetric);
   }
 
   /**
@@ -145,11 +147,13 @@ class Scatterplot {
     // Specificy accessor functions
     vis.colorValue = (d) => d.Genre;
     vis.xValue = (d) => d.Average_Score;
-    vis.yValue = (d) => d.Global_Sales;
+    vis.yValue = (d) => d[vis.salesMetric];
 
     // Set the scale input domains
     vis.xScale.domain([0, d3.max(vis.data, vis.xValue)]);
-    vis.yScale.domain([0, d3.max(vis.data, vis.yValue)]);
+    const minYValue =
+      d3.min(vis.data, vis.yValue) > 0 ? d3.min(vis.data, vis.yValue) : 1;
+    vis.yScale.domain([minYValue, d3.max(vis.data, vis.yValue)]);
 
     vis.renderVis();
   }
@@ -160,16 +164,22 @@ class Scatterplot {
   renderVis() {
     let vis = this;
 
-    // Add circles
+    // Add or update circles
     const circles = vis.chart
       .selectAll(".point")
-      .data(vis.data, (d) => d.trail)
+      .data(vis.data, (d) => d.Name)
       .join("circle")
       .attr("class", "point")
       .attr("r", 4)
       .attr("cy", (d) => vis.yScale(vis.yValue(d)))
       .attr("cx", (d) => vis.xScale(vis.xValue(d)))
-      .attr("fill", (d) => vis.colorScale(vis.colorValue(d)));
+      .attr("fill", (d) => {
+        return vis.selectedGenre !== null && d.Genre === vis.selectedGenre
+          ? vis.colorScale(d.Genre)
+          : "#d3d3d3";
+      })
+      .style("opacity", 0.3);
+    // .attr("fill", (d) => vis.colorScale(vis.colorValue(d)));
 
     // Tooltip event listeners
     circles
@@ -184,11 +194,11 @@ class Scatterplot {
                 <ul>
                   <li>User Score: ${d.User_Score}</li>
                   <li>Critic Score: ${d.Critic_Score}</li>
-                  <li>Global Sales: ${d.Global_Sales}</li>
-                  <li>North America Sales: ${d.NA_Sales}</li>
-                  <li>European Union Sales: ${d.EU_Sales}</li>
-                  <li>Japan Sales: ${d.JP_Sales}</li>
-                  <li>Other Sales: ${d.Other_Sales}</li>
+                  <li>Global Sales: ${d.Global_Sales} Million</li>
+                  <li>North America Sales: ${d.NA_Sales} Million</li>
+                  <li>European Union Sales: ${d.EU_Sales} Million</li>
+                  <li>Japan Sales: ${d.JP_Sales} Million</li>
+                  <li>Other Sales: ${d.Other_Sales} Million</li>
                 </ul>
               `);
       })
@@ -201,5 +211,8 @@ class Scatterplot {
     vis.xAxisG.call(vis.xAxis).call((g) => g.select(".domain").remove());
 
     vis.yAxisG.call(vis.yAxis).call((g) => g.select(".domain").remove());
+
+    //outline
+    vis.border = vis.svg.attr("class", "chart-outline");
   }
 }

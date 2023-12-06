@@ -9,59 +9,78 @@
   <body>
     <!-- Add HTML content, SVG drawing area, ... -->
 
-    <ul class="legend">
-      <li class="legend-btn" data-genre="Puzzle">
-        <span class="legend-symbol"></span> Puzzle
-      </li>
-      <li class="legend-btn" data-genre="Action">
-        <span class="legend-symbol"></span> Action
-      </li>
-      <li class="legend-btn" data-genre="Shooter">
-        <span class="legend-symbol"></span> Shooter
-      </li>
-      <li class="legend-btn" data-genre="Racing">
-        <span class="legend-symbol"></span> Racing
-      </li>
-      <li class="legend-btn" data-genre="Strategy">
-        <span class="legend-symbol"></span> Strategy
-      </li>
-      <li class="legend-btn" data-genre="Misc">
-        <span class="legend-symbol"></span> Misc
-      </li>
-      <li class="legend-btn" data-genre="Platform">
-        <span class="legend-symbol"></span> Platform
-      </li>
-      <li class="legend-btn" data-genre="Role-Playing">
-        <span class="legend-symbol"></span> Role-Playing
-      </li>
-      <li class="legend-btn" data-genre="Sports">
-        <span class="legend-symbol"></span> Sports
-      </li>
-      <li class="legend-btn" data-genre="Fighting">
-        <span class="legend-symbol"></span> Fighting
-      </li>
-      <li class="legend-btn" data-genre="Adventure">
-        <span class="legend-symbol"></span> Adventure
-      </li>
-      <li class="legend-btn" data-genre="Simulation">
-        <span class="legend-symbol"></span> Simulation
-      </li>
-    </ul>
-
-
-
-<!--    <div class="chart-container">-->
-<!--      <svg id="brush"></svg>-->
-<!--    </div>-->
-
     <div class="chart-container">
-      <svg id="bubbles"></svg>
-      <svg id="barchart"></svg>
-      <svg id="scatterplot"></svg>
+      <div>
+        Configure circle packing: <select id="bubbles-input">
+        <option value="platformGenre">Platform -> Genre</option>
+        <option value="genrePlatform">Genre -> Platform</option>
+        <option value="genrePublisher">Genre -> Publisher</option>
+      </select>
+      </div>
+
+      <ul class="legend">
+        <li class="legend-btn" data-genre="Action">
+          <span class="legend-symbol"></span> Action
+        </li>
+        <li class="legend-btn" data-genre="Adventure">
+          <span class="legend-symbol"></span> Adventure
+        </li>
+        <li class="legend-btn" data-genre="Fighting">
+          <span class="legend-symbol"></span> Fighting
+        </li>
+        <li class="legend-btn" data-genre="Platform">
+          <span class="legend-symbol"></span> Platform
+        </li>
+        <li class="legend-btn" data-genre="Puzzle">
+          <span class="legend-symbol"></span> Puzzle
+        </li>
+        <li class="legend-btn" data-genre="Racing">
+          <span class="legend-symbol"></span> Racing
+        </li>
+        <li class="legend-btn" data-genre="Role-Playing">
+          <span class="legend-symbol"></span> Role-Playing
+        </li>
+        <li class="legend-btn" data-genre="Shooter">
+          <span class="legend-symbol"></span> Shooter
+        </li>
+        <li class="legend-btn" data-genre="Simulation">
+          <span class="legend-symbol"></span> Simulation
+        </li>
+        <li class="legend-btn" data-genre="Sports">
+          <span class="legend-symbol"></span> Sports
+        </li>
+        <li class="legend-btn" data-genre="Strategy">
+          <span class="legend-symbol"></span> Strategy
+        </li>
+        <li class="legend-btn" data-genre="Misc">
+          <span class="legend-symbol"></span> Misc
+        </li>
+      </ul>
+      <br /><br /><br /><br /><br /><br /><br />
+      <div id="bubbles-container">
+        <svg id="bubbles"></svg>
+        <svg id="brush"></svg>
+      </div>
+
+      <svg id="whisker"></svg>
+
+      <hr />
+      <br /><br /><br />
+
+      <!-- <svg id="scatterplot"></svg> -->
+      <!-- Inside your chart-container div -->
+      <div id="scatterplot-container">
+        <svg id="scatterplot-Global_Sales"></svg>
+        <br /><br /><br /><br /><br /><br /><br />
+        <svg id="scatterplot-NA_Sales"></svg>
+        <br /><br /><br /><br /><br /><br /><br />
+        <svg id="scatterplot-EU_Sales"></svg>
+        <br /><br /><br /><br /><br /><br /><br />
+        <svg id="scatterplot-JP_Sales"></svg>
+        <br /><br /><br /><br /><br /><br /><br />
+        <svg id="scatterplot-Other_Sales"></svg>
+      </div>
     </div>
-
-    <div id="vis"></div>
-
 
     <div id="tooltip"></div>
 
