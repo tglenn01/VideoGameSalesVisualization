@@ -97,7 +97,7 @@ class Bubbles {
             .selectAll("circle")
             .data(vis.root.descendants())
             .join("circle")
-            .attr("fill", (d) => (d.children ? vis.colorScale(d.depth) : "white"))
+            .attr("fill", (d) => (d.children ? vis.colorScale(d.depth) : colourScale(d.data.Genre)))
             .attr("class", d => !d.children ? "point" : "parent")
             .attr("id", d => d.data.name)
             .classed("inactive", d => {
