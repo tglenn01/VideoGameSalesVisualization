@@ -99,8 +99,6 @@ class WhiskerChart {
         vis.chartArea = vis.svg.append('g')
             .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`);
 
-        vis.border = vis.chartArea.attr("class", "chart-outline")
-
         vis.genreGroups = vis.chartArea.selectAll('g')
             .data(vis.genresData.values(), data => {
                 return data;
