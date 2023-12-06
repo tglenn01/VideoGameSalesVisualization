@@ -123,7 +123,7 @@ class Scatterplot {
     vis.chart
       .append("text")
       .attr("class", "axis-title")
-      .attr("y", vis.height + 8)
+      .attr("y", vis.height + 20)
       .attr("x", vis.width + 20)
       .attr("dy", ".71em")
       .style("text-anchor", "end")

@@ -62,17 +62,27 @@
       <!-- <svg id="scatterplot"></svg> -->
       <!-- Inside your chart-container div -->
       <div id="scatterplot-container">
+        <!-- Global Sales Scatterplot -->
         <svg id="scatterplot-Global_Sales"></svg>
-        <br /><br /><br /><br /><br /><br /><br />
-        <svg id="scatterplot-NA_Sales"></svg>
-        <br /><br /><br /><br /><br /><br /><br />
-        <svg id="scatterplot-EU_Sales"></svg>
-        <br /><br /><br /><br /><br /><br /><br />
-        <svg id="scatterplot-JP_Sales"></svg>
-        <br /><br /><br /><br /><br /><br /><br />
-        <svg id="scatterplot-Other_Sales"></svg>
+        <br /><br /><br />
+        <br /><br /><br />
+      
+        <!-- Container for the 2x2 grid of other scatterplots -->
+        <div class="scatterplot-grid">
+          <!-- NA Sales Scatterplot -->
+          <svg id="scatterplot-NA_Sales"></svg>
+      
+          <!-- EU Sales Scatterplot -->
+          <svg id="scatterplot-EU_Sales"></svg>
+      
+          <!-- JP Sales Scatterplot -->
+          <svg id="scatterplot-JP_Sales"></svg>
+      
+          <!-- Other Sales Scatterplot -->
+          <svg id="scatterplot-Other_Sales"></svg>
+        </div>
       </div>
-    </div>
+      
 
     <div id="tooltip"></div>
 

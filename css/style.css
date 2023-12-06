@@ -162,11 +162,11 @@ h1 {
   float: left;
 }
 
-#barchart{
+#barchart {
   float: right;
 }
 
-#scatterplot{
+#scatterplot {
   float: left;
 }
 
@@ -176,7 +176,6 @@ h1 {
 
 .y-tick {
   font-size: 16px;
-
 }
 
 .x-tick {
@@ -185,7 +184,6 @@ h1 {
   color: #d92323;
   stroke-width: 1;
   stroke: #732424;
-
 }
 
 .chart-outline {
@@ -193,6 +191,27 @@ h1 {
   outline-width: 5px;
   outline-offset: 15px;
 }
+
+.scatterplot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns with flexible widths */
+  grid-gap: 1vw; /* Gap based on the width of the viewport */
+}
+
+.scatterplot-grid svg {
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  min-width: 200px; /* Minimum size to maintain legibility */
+  max-width: 100%; /* Maximum size */
+}
+
+/* Media query for smaller viewports */
+@media (max-width: 600px) {
+  .scatterplot-grid {
+    grid-gap: 0.5vw; /* Smaller gap for smaller screens */
+  }
+}
+
 /* Tooltip */
 
 circle.child {
