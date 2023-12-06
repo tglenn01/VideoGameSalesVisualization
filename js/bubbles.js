@@ -50,6 +50,22 @@ class Bubbles {
             .attr("height", vis.config.containerHeight)
             .attr("id", "bubbles");
 
+        // Array of all genres for reference
+        vis.allGenres = [
+          "Puzzle",
+          "Action",
+          "Shooter",
+          "Racing",
+          "Strategy",
+          "Misc",
+          "Platformer",
+          "Role-Playing",
+          "Sports",
+          "Fighting",
+          "Adventure",
+          "Simulation",
+        ];
+
         vis.updateVis();
     }
 
@@ -158,6 +174,11 @@ class Bubbles {
 
             focus = d;
 
+            // If node is a genre, toggle to that genre
+            if(vis.allGenres.includes(d.data.name)) {
+                onClickHelper(d.data.name);
+            }
+
             const transition = vis.svg
                 .transition()
                 .duration(event.altKey ? 7500 : 750)
@@ -209,7 +230,9 @@ class Bubbles {
     toggleGenre(genre) {
         let vis = this;
         vis.selectedGenre = genre;
-        vis.updateVis();
+
+        vis.updateCirclesAndLabels();
+
     }
 
     // Called by brush and used to update the nodes based on year.
@@ -218,20 +241,33 @@ class Bubbles {
 
         vis.selection = selection;
 
-        vis.svg.selectAll('circle').classed("inactive", d => {
-            if (!d.children &&
-                (d.data.Year_of_Release <= vis.selection[0].getFullYear() ||
-                    d.data.Year_of_Release >= vis.selection[1].getFullYear())) {
-                return true;
-            }
-        })
+        vis.updateCirclesAndLabels();
+    }
 
-        vis.svg.selectAll('text').classed("label inactive", d => {
-            if (!d.children &&
-                (d.data.Year_of_Release <= vis.selection[0].getFullYear() ||
-                    d.data.Year_of_Release >= vis.selection[1].getFullYear())) {
-                return true;
-            }
-        })
+    updateCirclesAndLabels() {
+      let vis = this;
+
+      vis.svg.selectAll('circle').classed("inactive", d => {
+          if (!d.children &&
+              (d.data.Year_of_Release <= vis.selection[0].getFullYear() ||
+                  d.data.Year_of_Release >= vis.selection[1].getFullYear())) {
+              return true;
+          } else if (!d.children && vis.selectedGenre !== undefined && d.data.Genre !== vis.selectedGenre) {
+              return true;
+          }
+      })
+
+      vis.svg.selectAll('text').classed("label inactive", d => {
+          if (!d.children &&
+              (d.data.Year_of_Release <= vis.selection[0].getFullYear() ||
+                  d.data.Year_of_Release >= vis.selection[1].getFullYear())) {
+              return true;
+          }
+      })
+    }
+
+    // Send selected genres to other charts on click :)
+    onClickHelper(genre) {
+        whiskers.toggleGenre(genre);
     }
 }
