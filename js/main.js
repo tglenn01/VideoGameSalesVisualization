@@ -1,10 +1,5 @@
 let scatterplot, data, bubbles, whiskers;
-let output_genre_platform, output_genre_publisher, output_platform_genre
-let bubbles;
-
-let genresToggleData = new Map();
-gameGenres.forEach(genre => genresToggleData.set(genre, true));
-
+let output_genre_platform, output_genre_publisher, output_platform_genre;
 
 // Load json data
 d3.json("data/output_platform_genre.json").then((_data) => {
@@ -42,7 +37,6 @@ d3.dsv(";", "data/processed.csv").then((_data) => {
   whiskers.initVis();
 });
 
-let scatterplot, data;
 let scatterplots = {};
 d3.csv("data/processed2.csv").then((_data) => {
   // Convert columns to numerical values
@@ -122,6 +116,9 @@ d3.selectAll(".legend-btn").on("click", function () {
     plot.selectedGenre = selectedGenre;
     plot.updateVis();
   });
+
+
+  whiskers.toggleGenre(selectedGenre);
 });
 
 // d3.selectAll(".legend-btn").on("click", function () {

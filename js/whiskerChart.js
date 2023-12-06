@@ -10,12 +10,18 @@ class WhiskerChart {
                 right: 150,
                 bottom: 150,
                 left: 150
-            }
+            },
+            boxOpacity: .80,
+            outlineColour: "#000435",
+            fadedOpacity: 0.2
         }
 
         this.initData(data);
     }
 
+    // Preprocess the database specifically for this chart
+    // Group all the games in the same genre
+    // Calculate Sum, n, mean, and variance
     initData(data) {
         let vis = this;
         // temp values used in for each loops
@@ -116,6 +122,7 @@ class WhiskerChart {
 
         vis.whiskersOutline = vis.genreGroups.append('line')
             .attr('class', 'whisker-outline')
+            .attr('stroke', vis.config.outlineColour)
             .attr('x1', d => vis.xScale(d.mean + d.variance) + boxHeight /2 + 1  + 'px')
             .attr('x2', d => vis.xScale(d.mean - d.variance) + boxHeight /2 - 1 + 'px')
             .attr('y1', d => vis.yScale(d.genre) + boxHeight / 2 + 'px')
@@ -141,6 +148,7 @@ class WhiskerChart {
             .attr('class', 'box-outline')
             .attr('width', boxHeight + 5)
             .attr('height', boxHeight + 5)
+            .attr('stroke', vis.config.outlineColour)
             .attr('y', d => vis.yScale(d.genre) - 2.5)
             .attr('x', d => vis.xScale(d.mean) - 2.5)
 
@@ -151,8 +159,9 @@ class WhiskerChart {
             .attr('y', d => vis.yScale(d.genre))
             .attr('x', d => vis.xScale(d.mean))
             .attr('stroke', d => colourScale(d.genre))
+            .attr('opacity', vis.config.boxOpacity)
             .on('click', (d, genre) => {
-                toggleHelper(genre['genre']);
+                onClickHelper(genre['genre']);
             });
 
 
@@ -168,9 +177,7 @@ class WhiskerChart {
             .attr('stroke-width', '0.35')
             .attr('stroke', 'black')
             .on('click', (d, genre) => {
-                //console.log(d);
-                //console.log(genre)
-               toggleHelper(genre);
+               onClickHelper(genre);
             });
 
         vis.xAxisG = vis.chartArea.append('g')
@@ -182,8 +189,6 @@ class WhiskerChart {
             .attr('class', 'x-tick-grid-lines')
             .call(vis.gridLinesAxis)
             .attr('transform', `translate(30, 50)`);
-
-
 
         vis.yAxisG.select(".domain").remove();
         vis.xAxisG.select(".domain").remove();
@@ -196,121 +201,72 @@ class WhiskerChart {
         let vis = this;
     }
 
+    // The specific genre is highlighted with it'c colour and full capacity
+    // The unselected genre the colours of the outline and main are flipped and the opacity is dimmed
     updateVis() {
         let vis = this;
 
-        vis.genreGroups = vis.chartArea.selectAll('g')
-            .data(vis.genresData.values(), data => {
-                return data;
-            })
-            .join('g')
-            .attr('class', 'genre-group')
-            .attr('transform', `translate(0, 15)`)
+        // update whiskers
+        vis.genreGroups.selectAll('.whisker').transition().duration(750).attr('stroke', d => {
+            if (d['active']) return colourScale(d.genre);
+            return vis.config.outlineColour;
+        }).attr('opacity', d => {
+            if (d['active']) return 1;
+            return vis.config.fadedOpacity;
+        })
 
+        // update whisker outlines
+        vis.genreGroups.selectAll('.whisker-outline').transition().duration(750).attr('stroke', d => {
+            if (d['active']) return vis.config.outlineColour;
+            return colourScale(d.genre);
+        }).attr('opacity', d => {
+            if (d['active']) return 1;
+            return vis.config.fadedOpacity;
+        })
 
-        let boxHeight = 20;
+        // update boxes
+        vis.genreGroups.selectAll('.box').transition().duration(750).attr('stroke', d => {
+            if (d['active']) return colourScale(d.genre);
+            return vis.config.outlineColour;
+        }).attr('opacity', d => {
+            if (d['active']) return vis.config.boxOpacity;
+            return vis.config.fadedOpacity;
+        })
 
-        vis.whiskersOutline = vis.genreGroups.append('line')
-            .attr('class', 'whisker-outline')
-            .attr('x1', d => vis.xScale(d.mean + d.variance) + boxHeight /2 + 1  + 'px')
-            .attr('x2', d => vis.xScale(d.mean - d.variance) + boxHeight /2 - 1 + 'px')
-            .attr('y1', d => vis.yScale(d.genre) + boxHeight / 2 + 'px')
-            .attr('y2', d => vis.yScale(d.genre) + boxHeight / 2 + 'px')
+        // update boxes outlines
+        vis.genreGroups.selectAll('.box-outline').transition().duration(750).attr('stroke', d => {
+            if (d['active']) return vis.config.outlineColour;
+            return colourScale(d.genre);
+        }).attr('opacity', d => {
+            if (d['active']) return 1;
+            return vis.config.fadedOpacity;
+        })
 
-        vis.whiskers = vis.genreGroups.append('line')
-            .attr('class', 'whisker')
-            .attr('x1', d => vis.xScale(d.mean + d.variance) + boxHeight /2  + 'px')
-            .attr('x2', d => vis.xScale(d.mean - d.variance) + boxHeight /2  + 'px')
-            .attr('y1', d => vis.yScale(d.genre) + boxHeight / 2 + 'px')
-            .attr('y2', d => vis.yScale(d.genre) + boxHeight / 2+ 'px')
-            .attr('stroke', d => colourScale(d.genre))
-            .attr('stroke-width', 0.5);
-
-        vis.boxesBackdrop = vis.genreGroups.append('rect')
-            .attr('class', 'box-backdrop')
-            .attr('width', boxHeight + 8)
-            .attr('height', boxHeight + 8)
-            .attr('y', d => vis.yScale(d.genre))
-            .attr('x', d => vis.xScale(d.mean))
-
-        vis.boxesOutline = vis.genreGroups.append('rect')
-            .attr('class', 'box-outline')
-            .attr('width', boxHeight + 5)
-            .attr('height', boxHeight + 5)
-            .attr('y', d => vis.yScale(d.genre) - 2.5)
-            .attr('x', d => vis.xScale(d.mean) - 2.5)
-
-        vis.boxes = vis.genreGroups.append('rect')
-            .attr('class', 'box')
-            .attr('width', boxHeight)
-            .attr('height', boxHeight)
-            .attr('y', d => vis.yScale(d.genre))
-            .attr('x', d => vis.xScale(d.mean))
-            .attr('stroke', d => colourScale(d.genre))
-            .on('click', (d, genre) => {
-                toggleHelper(genre['genre']);
-            });
-
-
-        vis.yAxisG = vis.chartArea.append('g')
-            .attr('class', 'y-tick-whisker')
-            .call(vis.yAxis);
-
-        vis.yAxisG.selectAll('.tick')
-            .attr('font-size', '16px')
-            .attr('font-weight', 'bold')
-            .attr('color', d => colourScale(d))
-            .attr('genre', d => d)
-            .attr('stroke-width', '0.35')
-            .attr('stroke', 'black')
-            .on('click', (d, genre) => {
-                toggleHelper(genre);
-            });
-
-        vis.xAxisG = vis.chartArea.append('g')
-            .attr('class', 'x-tick-whisker')
-            .call(vis.xAxis)
-            .attr('transform', `translate(30, ${vis.height})`);
-
-        vis.gridLines = vis.chartArea.append('g')
-            .attr('class', 'x-tick-grid-lines')
-            .call(vis.gridLinesAxis)
-            .attr('transform', `translate(30, 50)`);
-
-
-
-        vis.yAxisG.select(".domain").remove();
-        vis.xAxisG.select(".domain").remove();
-        vis.gridLines.select(".domain").remove();
+        // update just the opacity of the backdrop
+        vis.genreGroups.selectAll('.box-backdrop').transition().duration(750).attr('opacity', d => {
+            if (d['active']) return 1;
+            return vis.config.fadedOpacity;
+        })
     }
 
 
+    // Receive a genre to highlight on the graph,
+    // all but the selected genre are dimmed
     toggleGenre(genre) {
         let vis = this;
-        let oldData = vis.genresData;
-        let currentGenre = oldData.get(genre);
 
-
-        if (vis.initialGenreData.get(genre)['active']) {
-            currentGenre['active'] = false;
-            vis.initialGenreData.get(genre)['active'] = false;
-            oldData.delete(genre);
-        } else {
-            vis.initialGenreData.get(genre)['active'] = true;
-            oldData.set(genre, vis.initialGenreData.get(genre));
-        }
+        vis.genresData.forEach(entry => {
+            entry['active'] = entry['genre'] === genre;
+        })
 
         this.updateVis()
     }
 
 
-
-
 }
 
-function toggleHelper(genre) {
-    genresToggleData.set(genre, !genresToggleData.get(genre));
-    scatterplot.toggleGenre(genre);
+// Send selected genres to other charts on click :)
+function onClickHelper(genre) {
     bubbles.toggleGenre(genre);
     whiskers.toggleGenre(genre);
 }

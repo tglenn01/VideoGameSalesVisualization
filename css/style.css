@@ -209,13 +209,11 @@ h1 {
 }
 
 .box {
-  opacity: 0.8;
   fill: aliceblue;
   stroke-width: 5;
 }
 
 .box-outline {
-  stroke: #000435;
   stroke-width: 5;
 }
 
@@ -276,7 +274,6 @@ h1 {
 
 .whisker-outline {
   stroke-width: 5;
-  stroke: #000435;
 }
 
 .chart-outline {
