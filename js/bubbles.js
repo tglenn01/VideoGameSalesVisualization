@@ -175,7 +175,6 @@ class Bubbles {
 
             focus = d;
 
-            console.log(d);
             // If node is a genre, toggle to that genre
             if(vis.allGenres.includes(d.data.name)) {
                 onClickHelper(d.data.name);
