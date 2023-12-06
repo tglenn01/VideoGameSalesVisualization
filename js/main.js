@@ -16,7 +16,8 @@ d3.json("data/output_platform_genre.json").then((_data) => {
       parentElement: "#brush",
     },
     _data,
-    bubbles
+    bubbles,
+    scatterplots
   );
 });
 d3.json("data/output_genre_platform.json").then((_data) => {

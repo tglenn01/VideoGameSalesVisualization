@@ -282,5 +282,15 @@ class Bubbles {
     // Send selected genres to other charts on click :)
     onClickHelper(genre) {
         whiskers.toggleGenre(genre);
+        const salesMetrics = [
+          "Global_Sales",
+          "NA_Sales",
+          "EU_Sales",
+          "JP_Sales",
+          "Other_Sales",
+        ]
+        salesMetrics.forEach((metric) => {
+          vis.scatterplots[metric].toggleGenre(genre);
+        });
     }
 }

@@ -119,8 +119,15 @@ class Brush {
     let vis = this;
     vis.bubbles.updateSelection(selection);
 
-    vis.scatterplots.forEach((sp) => {
-      sp.updateSelection(selection);
+    const salesMetrics = [
+      "Global_Sales",
+      "NA_Sales",
+      "EU_Sales",
+      "JP_Sales",
+      "Other_Sales",
+    ]
+    salesMetrics.forEach((metric) => {
+      vis.scatterplots[metric].updateSelection(selection);
     });
   }
 }
