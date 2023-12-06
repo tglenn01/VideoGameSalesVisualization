@@ -47,42 +47,13 @@ class Scatterplot {
       vis.config.margin.bottom;
 
     if (vis.salesMetric == "Global_Sales") {
-      vis.width = vis.config.containerWidth * 2 -
-          vis.config.margin.left -
-          vis.config.margin.right;
+      vis.width =
+        vis.config.containerWidth * 2 -
+        vis.config.margin.left -
+        vis.config.margin.right;
     }
 
-    // Initialize scales
-    vis.colorScale = d3
-      .scaleOrdinal()
-      .range([
-        "#ff0000", // red for Puzzle
-        "#2f4f4f", // darkslategray for Action
-        "#00ffff", // aqua for Shooter
-        "#ffff00", // yellow for Racing
-        "#eee8aa", // palegoldenrod for Strategy
-        "#ff69b4", // hotpink for Misc
-        "#000080", // navy for Platformer
-        "#00ff00", // lime for Role-Playing
-        "#1e90ff", // dodgerblue for Sports
-        "#008000", // green for Fighting
-        "#8b4513", // saddlebrown for Adventure
-        "#ff00ff", // fuchsia for Simulation
-      ])
-      .domain([
-        "Puzzle",
-        "Action",
-        "Shooter",
-        "Racing",
-        "Strategy",
-        "Misc",
-        "Platformer",
-        "Role-Playing",
-        "Sports",
-        "Fighting",
-        "Adventure",
-        "Simulation",
-      ]);
+
 
     vis.xScale = d3.scaleLinear().range([0, vis.width]);
 
@@ -104,7 +75,12 @@ class Scatterplot {
     // Define size of SVG drawing area
     vis.svg = d3
       .select(vis.config.parentElement)
-      .attr("width", vis.salesMetric == "Global_Sales" ? vis.config.containerWidth * 2 : vis.config.containerWidth)
+      .attr(
+        "width",
+        vis.salesMetric == "Global_Sales"
+          ? vis.config.containerWidth * 2
+          : vis.config.containerWidth
+      )
       .attr("height", vis.config.containerHeight);
 
     // Append group element that will contain our actual chart
@@ -181,7 +157,7 @@ class Scatterplot {
       .attr("cx", (d) => vis.xScale(vis.xValue(d)))
       .attr("fill", (d) => {
         return vis.selectedGenre !== null && d.Genre === vis.selectedGenre
-          ? vis.colorScale(d.Genre)
+          ? colourScale(d.Genre)
           : "#5C5C5C";
       })
       .style("opacity", 0.3);
@@ -190,11 +166,12 @@ class Scatterplot {
     // Tooltip event listeners
     circles
       .on("mouseover", (event, d) => {
-        d3
-          .select("#tooltip")
-          .style("opacity", 1)
-          .style("left", event.pageX + vis.config.tooltipPadding + "px")
-          .style("top", event.pageY + vis.config.tooltipPadding + "px").html(`
+        if (!d3.select(event.currentTarget).classed("inactive")) {
+          d3
+            .select("#tooltip")
+            .style("opacity", 1)
+            .style("left", event.pageX + vis.config.tooltipPadding + "px")
+            .style("top", event.pageY + vis.config.tooltipPadding + "px").html(`
                 <div class="tooltip-title">${d.Genre}</div>
                 <div><i>${d.Name}</i></div>
                 <ul>
@@ -208,6 +185,7 @@ class Scatterplot {
                   <li>Year of Release: ${d.Year_of_Release}</li>
                 </ul>
               `);
+        }
       })
       .on("mouseleave", () => {
         d3.select("#tooltip").style("opacity", 0);

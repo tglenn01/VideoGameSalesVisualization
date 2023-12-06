@@ -276,7 +276,6 @@ h1 {
   font-size: 16px;
 }
 
-
 /*.x-tick-whisker {*/
 /*  font-weight: bold;*/
 /*  font-size: 32px;*/
@@ -328,6 +327,14 @@ circle.child {
 
 .label.inactive {
   opacity: 0;
+}
+
+.reset-filter-btn {
+  font-weight: bold;
+  font-size: 32px;
+  color: whitesmoke;
+  stroke-width: 2;
+  stroke: black;
 }
 
 /* Media query for smaller screens */

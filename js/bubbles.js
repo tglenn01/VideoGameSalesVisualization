@@ -232,6 +232,8 @@ class Bubbles {
     toggleGenre(genre) {
         let vis = this;
         vis.selectedGenre = genre;
+        vis.updateVis();
+    }
 
         vis.updateCirclesAndLabels();
 
@@ -239,6 +241,9 @@ class Bubbles {
           zoom(d3.select("#" + genre))
         }
 
+    // Removes genre filter and toggles all genres back on
+    toggleAllGenresOn() {
+        // TODO
     }
 
     // Called by brush and used to update the nodes based on year.

@@ -261,10 +261,22 @@ class WhiskerChart {
     }
 
 
+    toggleAllGenresOn() {
+        let vis = this;
+
+        vis.genresData.forEach(entry => {
+            entry['active'] = true;
+        })
+
+        this.updateVis()
+    }
+
+
 }
 
 // Send selected genres to other charts on click :)
 function onClickHelper(genre) {
+    updateLegend(genre);
     bubbles.toggleGenre(genre);
     whiskers.toggleGenre(genre);
 }
