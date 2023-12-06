@@ -3,11 +3,11 @@ class Brush {
     constructor(_config, _data, bubbles) {
         this.config = {
             parentElement: _config.parentElement,
-            containerWidth:  800,
+            containerWidth:  500,
             containerHeight: 60,
-            contextHeight: 50,
-            margin: {top: 10, right: 10, bottom: 10, left: 10},
-            contextMargin: {top: 10, right: 10, bottom: 10, left: 10}
+            contextHeight: 60,
+            margin: {top: 30, right: 10, bottom: 10, left: 10},
+            contextMargin: {top: 200, right: 20, bottom: 10, left: 10}
         }
         this.data = _data;
         this.bubbles = bubbles;

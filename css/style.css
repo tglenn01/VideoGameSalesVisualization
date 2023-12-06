@@ -1,12 +1,102 @@
 body {
+  margin: 0;
   padding: 30px;
-  background: #f8f8f8;
+  font-family: Arial, sans-serif;
 }
-.container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f0f0;
+}
+
+.middle-section {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.bottom-section {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center children horizontally */
+  padding: 20px;
+}
+
+.scatterplot-left,
+.scatterplot-right {
+  width: 100%; /* Full width to contain the scatterplots */
+  display: flex;
+  justify-content: center; /* Center the scatterplots horizontally */
+  margin-bottom: 10px; /* Space between the rows of scatterplots */
+}
+
+.scatterplot-right {
+  flex-wrap: wrap;
+  justify-content: space-around; /* Evenly distribute space around the scatterplots */
+}
+
+.scatterplot-tile {
+  flex-basis: calc(50% - 5px);
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+#scatterplot-Global_Sales {
+  max-width: 600px; /* Set a max-width for the global sales plot if desired */
+  margin: auto; /* This will center the SVG if it's smaller than its container */
+}
+
+.chart-container {
+  margin: 10px;
+  border: 1px solid #ccc;
+  overflow: hidden;
+}
+
+.title-container {
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: left;
+  font-family: Arial, sans-serif;
+}
+
+.title-container h1 {
+  font-family: Arial, sans-serif;
+}
+
+.title-container p {
+  margin: 10px 0;
+}
+
+.legend-select-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.legend {
+  list-style: none;
+  padding: 0;
+}
+
+.legend-btn {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+#brush-container {
+  text-align: center;
+  margin: 20px;
+  border: 1px solid #ccc; /* Add border style */
+  overflow: visible;
+}
+
 #footer {
   font-size: 11px;
   display: flex;
@@ -135,14 +225,20 @@ h1 {
   background: #ff00ff; /* fuchsia */
 }
 
+.filter-symbol {
+  width: 12px;
+  height: 12px;
+  margin-right: 3px;
+  display: inline-block;
+  background: black;
+}
+
 .box {
-  opacity: 0.8;
   fill: aliceblue;
   stroke-width: 5;
 }
 
 .box-outline {
-  stroke: #000435;
   stroke-width: 5;
 }
 
@@ -174,16 +270,13 @@ h1 {
 /*  float: right;*/
 /*}*/
 
-.y-tick {
+.y-tick-whisker {
   font-size: 16px;
 }
 
 .x-tick {
-  font-weight: bold;
-  font-size: 32px;
-  color: #d92323;
-  stroke-width: 1;
-  stroke: #732424;
+  font-size: 16px;
+  color: black;
 }
 
 .chart-outline {
@@ -192,28 +285,30 @@ h1 {
   outline-offset: 15px;
 }
 
-.scatterplot-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two columns with flexible widths */
-  grid-gap: 1vw; /* Gap based on the width of the viewport */
-}
-
-.scatterplot-grid svg {
-  width: 100%;
-  height: auto; /* Maintain aspect ratio */
-  min-width: 200px; /* Minimum size to maintain legibility */
-  max-width: 100%; /* Maximum size */
-}
-
-/* Media query for smaller viewports */
-@media (max-width: 600px) {
-  .scatterplot-grid {
-    grid-gap: 0.5vw; /* Smaller gap for smaller screens */
-  }
-}
-
 /* Tooltip */
 
 circle.child {
   pointer-events: none;
+}
+/* Marks */
+/* .point {
+
+} */
+.point.inactive {
+  opacity: 0.3;
+}
+
+.label {
+  opacity: 1;
+}
+
+.label.inactive {
+  opacity: 0;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .chart-container {
+    margin: 5px;
+  }
 }

@@ -9,7 +9,7 @@ class Scatterplot {
       parentElement: _config.parentElement,
       containerWidth: _config.containerWidth || 600,
       containerHeight: _config.containerHeight || 400,
-      margin: _config.margin || { top: 25, right: 20, bottom: 20, left: 35 },
+      margin: _config.margin || { top: 50, right: 20, bottom: 100, left: 50 },
       tooltipPadding: _config.tooltipPadding || 15,
     };
     this.data = _data.map((d) => {
@@ -135,7 +135,7 @@ class Scatterplot {
       .attr("x", 0)
       .attr("y", 0)
       .attr("dy", ".71em")
-      .text(vis.salesMetric);
+      .text(vis.salesMetric.replace(/_/g, " "));
   }
 
   /**
@@ -212,7 +212,9 @@ class Scatterplot {
 
     vis.yAxisG.call(vis.yAxis).call((g) => g.select(".domain").remove());
 
-    //outline
-    vis.border = vis.svg.attr("class", "chart-outline");
+  }
+
+  toggleGenre(genre) {
+    let vis = this;
   }
 }
