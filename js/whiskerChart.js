@@ -3,13 +3,13 @@ class WhiskerChart {
     constructor(_config, data) {
         this.config = {
             parentElement: _config.parentElement,
-            containerWidth: 900,
-            containerHeight: 840,
+            containerWidth: 650,
+            containerHeight: 600,
             margin: {
-                top: 40,
-                right: 150,
-                bottom: 150,
-                left: 150
+                top: 10,
+                right: 50,
+                bottom: 40,
+                left: 110
             }
         }
 
@@ -81,7 +81,7 @@ class WhiskerChart {
         vis.xAxis = d3.axisBottom(vis.xScale)
             .ticks(4)
             .tickFormat(d => vis.esrbLabels[d])
-            .tickSize(-vis.height + vis.config.margin.bottom - 100);
+            .tickSize(-vis.height + vis.config.margin.bottom );
 
         vis.yAxis = d3.axisLeft(vis.yScale)
             .ticks(12);

@@ -3,13 +3,13 @@ class Bubbles {
     constructor(_config, data) {
         this.config = {
             parentElement: _config.parentElement,
-            containerWidth: 800,
-            containerHeight: 800,
+            containerWidth: 600,
+            containerHeight: 600,
             margin: {
-                top: 30,
-                right: 30,
-                bottom: 30,
-                left: 30,
+                top: 5,
+                right: 5,
+                bottom: 5,
+                left: 5,
             },
             tooltipPadding: _config.tooltipPadding || 15,
         };
@@ -49,8 +49,6 @@ class Bubbles {
             .attr("width", vis.config.containerWidth)
             .attr("height", vis.config.containerHeight)
             .attr("id", "bubbles");
-
-        // Todo: Append Axis title
 
         vis.updateVis();
     }

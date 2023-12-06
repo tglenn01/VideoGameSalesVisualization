@@ -12,7 +12,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 5px;
   background-color: #f0f0f0;
 }
 
@@ -52,6 +52,7 @@ body {
 }
 
 .legend-select-container {
+  text-align: center;
   display: flex;
   flex-direction: column;
 }
@@ -67,9 +68,10 @@ body {
 }
 
 #brush-container {
-  margin: 10px;
+  text-align: center;
+  margin: 20px;
   border: 1px solid #ccc; /* Add border style */
-  overflow: hidden;
+  overflow: visible;
 }
 
 #footer {
@@ -245,12 +247,8 @@ h1 {
 }
 
 .x-tick {
-  font-weight: bold;
-  font-size: 32px;
-  color: #d92323;
-  stroke-width: 1;
-  stroke: #732424;
-
+  font-size: 16px;
+  color: black;
 }
 
 .chart-outline {
