@@ -1,6 +1,13 @@
+let scatterplot, data, bubbles, whiskers;
+
+
+let genresToggleData = new Map();
+gameGenres.forEach(genre => genresToggleData.set(genre, true));
+
+
 // Load json data
 d3.json("data/output2.json").then((_data) => {
-  let bubbles = new Bubbles(
+  bubbles = new Bubbles(
     {
       parentElement: "#bubbles",
     },
@@ -18,16 +25,16 @@ d3.json("data/output2.json").then((_data) => {
 d3.dsv(";", "data/processed.csv").then((_data) => {
   let processedData = preprocessData(_data);
 
-  let whiskerChart = new WhiskerChart(
+  whiskers = new WhiskerChart(
     {
       parentElement: "#whisker",
     },
     processedData
   );
-  whiskerChart.initVis();
+  whiskers.initVis();
 });
 
-let scatterplot, data;
+
 d3.csv("data/processed2.csv").then((_data) => {
   // Convert columns to numerical values
   data = _data;
@@ -79,4 +86,20 @@ d3.selectAll(".legend-btn").on("click", function () {
   scatterplot.updateVis();
 });
 
-// Todo: Turn developer into an array!
+d3.selectAll('.reset-filter-btn').on("click", function () {
+    toggleGenresOn();
+})
+
+
+function toggleGenresOn() {
+  console.log('Resetting All Genres');
+  genresToggleData.forEach((isOn, genre) => {
+    if (!isOn) {
+      bubbles.toggleGenre(genre)
+      whiskers.toggleGenre(genre)
+      scatterplot.toggleGenre(genre)
+    }
+    genresToggleData.set(genre, true)
+  })
+}
+

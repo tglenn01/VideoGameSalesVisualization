@@ -205,4 +205,8 @@ class Scatterplot {
     //outline
     vis.border = vis.svg.attr("class", "chart-outline");
   }
+
+  toggleGenre(genre) {
+    let vis = this;
+  }
 }

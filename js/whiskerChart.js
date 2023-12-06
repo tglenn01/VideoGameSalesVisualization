@@ -80,7 +80,11 @@ class WhiskerChart {
         vis.esrbLabels = ['Everyone', 'E10+', 'Teen', 'Mature']
         vis.xAxis = d3.axisBottom(vis.xScale)
             .ticks(4)
-            .tickFormat(d => vis.esrbLabels[d])
+            .tickFormat(d => vis.esrbLabels[d]);
+
+        vis.gridLinesAxis = d3.axisTop(vis.xScale)
+            .ticks(4)
+            .tickFormat(d => '')
             .tickSize(-vis.height + vis.config.margin.bottom - 100);
 
         vis.yAxis = d3.axisLeft(vis.yScale)
@@ -96,7 +100,6 @@ class WhiskerChart {
 
         vis.border = vis.chartArea.attr("class", "chart-outline")
 
-
         vis.genreGroups = vis.chartArea.selectAll('g')
             .data(vis.genresData.values(), data => {
                 return data;
@@ -107,6 +110,15 @@ class WhiskerChart {
 
 
         let boxHeight = 20
+
+        // // might need to remove to click the labels
+        // vis.backgroundBox = vis.svg.append('rect')
+        //     .attr('fill', 'black')
+        //     .attr('width', vis.config.containerWidth - 125)
+        //     .attr('height', vis.config.containerHeight - 165)
+        //     .attr('y', 70)
+        //     .attr('x', 25)
+        //     .attr('opacity', 0.05)
 
 
         vis.whiskersOutline = vis.genreGroups.append('line')
@@ -147,17 +159,41 @@ class WhiskerChart {
             .attr('x', d => vis.xScale(d.mean))
             .attr('stroke', d => colourScale(d.genre))
 
+
         vis.yAxisG = vis.chartArea.append('g')
-            .attr('class', 'y-tick')
+            .attr('class', 'y-tick-whisker')
             .call(vis.yAxis);
 
+        vis.yAxisG.selectAll('.tick')
+            .attr('font-size', '16px')
+            .attr('font-weight', 'bold')
+            .attr('color', d => colourScale(d))
+            .attr('genre', d => d)
+            .attr('stroke-width', '0.35')
+            .attr('stroke', 'black')
+            .on('click', (d, genre) => {
+                genresToggleData.set(genre, false);
+
+
+                scatterplot.toggleGenre(genre);
+                bubbles.toggleGenre(genre)
+            });
+
         vis.xAxisG = vis.chartArea.append('g')
-            .attr('class', 'x-tick')
+            .attr('class', 'x-tick-whisker')
             .call(vis.xAxis)
-            .attr('transform', `translate(15, ${vis.height})`);
+            .attr('transform', `translate(30, ${vis.height})`);
+
+        vis.gridLines = vis.chartArea.append('g')
+            .attr('class', 'x-tick-grid-lines')
+            .call(vis.gridLinesAxis)
+            .attr('transform', `translate(30, 50)`);
+
+
 
         vis.yAxisG.select(".domain").remove();
         vis.xAxisG.select(".domain").remove();
+        vis.gridLines.select(".domain").remove();
 
     }
 
