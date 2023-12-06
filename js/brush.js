@@ -40,12 +40,13 @@ class Brush {
 
         // Define size of SVG drawing area
         vis.svg = d3.select(vis.config.parentElement)
-            .attr('width', vis.width)
-            .attr('height', vis.height);
+            .attr('width', vis.config.containerWidth)
+            .attr('height', vis.config.containerHeight);
 
         // Define and add brush and add listener if brushed
         vis.brush = d3.brushX()
-            .extent([[vis.config.margin.left, 0], [vis.width, vis.config.contextHeight]])
+            .extent([[vis.config.margin.left, 0], [vis.config.containerWidth - vis.config.margin.right, vis.config.containerHeight - vis.config.margin.bottom]])
+            //.extent([[vis.config.margin.left, 0], [vis.width, vis.config.contextHeight]])
             .on("end", brushed);
 
         vis.svg.append("g")
@@ -59,6 +60,12 @@ class Brush {
             d3.select(this).call(brushHandle, selection);
         }
 
+        vis.arc = d3.arc()
+            .innerRadius(0)
+            .outerRadius((vis.config.contextHeight - vis.config.margin.top - vis.config.margin.bottom) / 2)
+            .startAngle(0)
+            .endAngle((d, i) => i ? Math.PI : -Math.PI)
+
         // Adds brush handle and its listeners.
         function brushHandle(g, selection) {
             g.selectAll(".handle--custom")
@@ -71,6 +78,7 @@ class Brush {
                         .attr("stroke", "#000")
                         .attr("stroke-width", 1.5)
                         .attr("cursor", "ew-resize")
+                        .attr("d", vis.arc)
                 )
                 .attr("display", selection === null ? "none" : null)
                 .attr("transform", selection === null ? null : (d, i) => `translate(${selection[i]},${(vis.config.contextHeight + vis.config.margin.top - vis.config.margin.bottom) / 2})`);
