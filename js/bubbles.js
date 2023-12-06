@@ -88,6 +88,8 @@ class Bubbles {
                     (d.data.Year_of_Release <= vis.selection[0].getFullYear() ||
                         d.data.Year_of_Release >= vis.selection[1].getFullYear())) {
                     return true;
+                } else if (!d.children && vis.selectedGenre !== undefined && d.data.Genre !== vis.selectedGenre) {
+                    return true;
                 }
             })
             .attr("pointer-events", (d) => (!d.children ? "auto" : null))
@@ -206,6 +208,8 @@ class Bubbles {
 
     toggleGenre(genre) {
         let vis = this;
+        vis.selectedGenre = genre;
+        vis.updateVis();
     }
 
     // Called by brush and used to update the nodes based on year.

@@ -89,7 +89,7 @@ d3.selectAll(".legend-btn").on("click", function () {
     plot.updateVis();
   });
 
-
+  bubbles.toggleGenre(selectedGenre);
   whiskers.toggleGenre(selectedGenre);
 });
 
@@ -129,4 +129,3 @@ function toggleGenresOn() {
     genresToggleData.set(genre, true)
   })
 }
-
