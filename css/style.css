@@ -319,7 +319,7 @@ circle.child {
 
 } */
 .point.inactive {
-  opacity: 0;
+  opacity: 0.3;
 }
 
 .label {
