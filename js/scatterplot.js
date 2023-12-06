@@ -216,7 +216,6 @@ class Scatterplot {
 
   updateSelection(selection) {
     let vis = this;
-    console.log("test");
     const selectionStart = selection[0].getFullYear();
     const selectionEnd = selection[1].getFullYear();
 
@@ -251,5 +250,3 @@ function resetScatterPlots() {
     plot.updateVis();
   });
 }
-
-
