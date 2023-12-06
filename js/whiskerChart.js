@@ -93,7 +93,7 @@ class WhiskerChart {
         vis.gridLinesAxis = d3.axisTop(vis.xScale)
             .ticks(4)
             .tickFormat(d => '')
-            .tickSize(-vis.height + vis.config.margin.bottom - 100);
+            .tickSize(-vis.height + vis.config.margin.bottom + 50);
 
         vis.yAxis = d3.axisLeft(vis.yScale)
             .ticks(vis.genresData.size);
@@ -112,7 +112,7 @@ class WhiskerChart {
             })
             .join('g')
             .attr('class', 'genre-group')
-            .attr('transform', `translate(0, 15)`)
+            .attr('transform', `translate(0, 10)`)
 
 
         let boxHeight = 20
@@ -181,7 +181,7 @@ class WhiskerChart {
         vis.xAxisG = vis.chartArea.append('g')
             .attr('class', 'x-tick-whisker')
             .call(vis.xAxis)
-            .attr('transform', `translate(30, ${vis.height})`);
+            .attr('transform', `translate(30, ${vis.height - 35})`);
 
         vis.gridLines = vis.chartArea.append('g')
             .attr('class', 'x-tick-grid-lines')
@@ -279,4 +279,5 @@ function onClickHelper(genre) {
     updateLegend(genre);
     bubbles.toggleGenre(genre);
     whiskers.toggleGenre(genre);
+    toggleScatterPlotsGenre(genre);
 }

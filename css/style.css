@@ -240,10 +240,6 @@ h1 {
   stroke-width: 5;
 }
 
-.box-outline {
-  stroke-width: 5;
-}
-
 .box-backdrop {
   fill: #000435;
 }
@@ -333,6 +329,7 @@ circle.child {
   font-weight: bold;
   font-size: 32px;
   color: black;
+  background: pink;
 }
 
 /* Media query for smaller screens */

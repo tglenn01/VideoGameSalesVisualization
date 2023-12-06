@@ -90,15 +90,17 @@ d3.select('#bubbles-input').on('change', function() {
 })
 
 d3.selectAll('.reset-filter-btn').on("click", function () {
-    toggleGenresOn();
+    toggleGenresOff();
 })
 
 
-function toggleGenresOn() {
+function toggleGenresOff() {
   console.log('Resetting All Genres');
+
+  resetLegend();
 
   bubbles.toggleAllGenresOn();
   whiskers.toggleAllGenresOn();
 
-  resetLegend();
+  resetScatterPlots()
 }
