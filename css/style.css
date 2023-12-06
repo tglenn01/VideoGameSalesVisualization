@@ -58,6 +58,7 @@ body {
   border: 1px solid #ccc;
   overflow: hidden;
   border-radius: 25px;
+  background-color: #f0f0f0;
 }
 
 .title-container {
@@ -326,10 +327,15 @@ circle.child {
 }
 
 .reset-filter-btn {
+  /*width: 100px;*/
   font-weight: bold;
   font-size: 32px;
   color: black;
-  background: pink;
+  background: #bbb;
+}
+
+.reset-btn-background {
+  border: 3px solid black;
 }
 
 /* Media query for smaller screens */
