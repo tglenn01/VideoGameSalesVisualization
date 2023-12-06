@@ -242,7 +242,8 @@ class Bubbles {
 
     // Removes genre filter and toggles all genres back on
     toggleAllGenresOn() {
-        // TODO
+        let vis = this;
+        vis.toggleGenre(undefined);
     }
 
     // Called by brush and used to update the nodes based on year.
@@ -264,7 +265,9 @@ class Bubbles {
               return true;
           } else if (!d.children && vis.selectedGenre !== undefined && d.data.Genre !== vis.selectedGenre) {
               return true;
-          }
+          } else{
+              return false;
+            }
       })
 
       vis.svg.selectAll('text').classed("label inactive", d => {
