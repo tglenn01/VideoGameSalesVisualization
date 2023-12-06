@@ -314,9 +314,6 @@ circle.child {
 /* .point {
 
 } */
-.point.inactive {
-  opacity: 0.3;
-}
 
 .label {
   opacity: 1;

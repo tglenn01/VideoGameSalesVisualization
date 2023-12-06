@@ -152,7 +152,11 @@ class Scatterplot {
       .data(vis.data, (d) => d.Name)
       .join("circle")
       .attr("class", "point")
-      .attr("r", 4)
+      .attr("r", (d) => {
+        return vis.selectedGenre !== null && d.Genre === vis.selectedGenre
+            ? 5
+            : 4;
+      })
       .attr("cy", (d) => vis.yScale(vis.yValue(d)))
       .attr("cx", (d) => vis.xScale(vis.xValue(d)))
       .attr("fill", (d) => {
@@ -160,7 +164,17 @@ class Scatterplot {
           ? colourScale(d.Genre)
           : "#5C5C5C";
       })
-      .style("opacity", 0.3);
+      .attr('stroke', 'black')
+      .attr("stroke-width", (d) => {
+        return vis.selectedGenre !== null && d.Genre === vis.selectedGenre
+            ? '1px'
+            : "0px";
+      })
+      .attr("opacity", (d) => {
+        return vis.selectedGenre !== null && d.Genre === vis.selectedGenre
+            ? '.8'
+            : ".2";
+      });
     // .attr("fill", (d) => vis.colorScale(vis.colorValue(d)));
 
     // Tooltip event listeners
