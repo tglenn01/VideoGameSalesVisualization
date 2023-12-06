@@ -10,7 +10,10 @@ class WhiskerChart {
                 right: 50,
                 bottom: 40,
                 left: 110
-            }
+            },
+            boxOpacity: .80,
+            outlineColour: "#000435",
+            fadedOpacity: 0.2
         }
 
         this.initData(data);
@@ -85,8 +88,12 @@ class WhiskerChart {
         vis.esrbLabels = ['Everyone', 'E10+', 'Teen', 'Mature']
         vis.xAxis = d3.axisBottom(vis.xScale)
             .ticks(4)
-            .tickFormat(d => vis.esrbLabels[d])
-            .tickSize(-vis.height + vis.config.margin.bottom );
+            .tickFormat(d => vis.esrbLabels[d]);
+
+        vis.gridLinesAxis = d3.axisTop(vis.xScale)
+            .ticks(4)
+            .tickFormat(d => '')
+            .tickSize(-vis.height + vis.config.margin.bottom - 100);
 
         vis.yAxis = d3.axisLeft(vis.yScale)
             .ticks(vis.genresData.size);
