@@ -104,12 +104,15 @@ d3.select("#bubbles-input").on("change", function () {
   switch (selection) {
     case "genrePlatform":
       bubbles.data = output_genre_platform;
+      bubbles.genrePlatformDatasetSelected = true;
       break;
     case "genrePublisher":
       bubbles.data = output_genre_publisher;
+      bubbles.genrePlatformDatasetSelected = false;
       break;
     case "platformGenre":
       bubbles.data = output_platform_genre;
+      bubbles.genrePlatformDatasetSelected = false;
       break;
   }
   bubbles.updateVis();

@@ -99,6 +99,7 @@ class Bubbles {
             .join("circle")
             .attr("fill", (d) => (d.children ? vis.colorScale(d.depth) : "white"))
             .attr("class", d => !d.children ? "point" : "parent")
+            .attr("id", d => d.data.name)
             .classed("inactive", d => {
                 if (!d.children &&
                     (d.data.Year_of_Release <= vis.selection[0].getFullYear() ||
@@ -117,7 +118,7 @@ class Bubbles {
             })
             .on(
                 "click",
-                (event, d) => focus !== d && (zoom(event, d), event.stopPropagation())
+                (event, d) => focus !== d && (zoom(d), event.stopPropagation())
             );
 
         const label = vis.svg
@@ -148,7 +149,7 @@ class Bubbles {
             .attr("y", (d, i, nodes) => `${i - nodes.length / 2 + 0.35}em`)
             .text((d) => d);
 
-        vis.svg.on("click", (event) => zoom(event, vis.root));
+        vis.svg.on("click", (event) => zoom(vis.root));
         let focus = vis.root;
         let view;
         zoomTo([focus.x, focus.y, focus.r * 2]);
@@ -169,11 +170,12 @@ class Bubbles {
             node.attr("r", (d) => d.r * k);
         }
 
-        function zoom(event, d) {
+        function zoom(d) {
             const focus0 = focus;
 
             focus = d;
 
+            console.log(d);
             // If node is a genre, toggle to that genre
             if(vis.allGenres.includes(d.data.name)) {
                 onClickHelper(d.data.name);
@@ -181,7 +183,7 @@ class Bubbles {
 
             const transition = vis.svg
                 .transition()
-                .duration(event.altKey ? 7500 : 750)
+                .duration(750)
                 .tween("zoom", (d) => {
                     const i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2]);
                     return (t) => zoomTo(i(t));
@@ -232,6 +234,10 @@ class Bubbles {
         vis.selectedGenre = genre;
 
         vis.updateCirclesAndLabels();
+
+        if (vis.genrePlatformDatasetSelected) {
+          zoom(d3.select("#" + genre))
+        }
 
     }
 
