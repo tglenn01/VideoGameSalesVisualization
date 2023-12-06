@@ -1,12 +1,77 @@
 body {
+  margin: 0;
   padding: 30px;
-  background: #f8f8f8;
+  font-family: Arial, sans-serif;
 }
-.container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+.middle-section {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.bottom-section {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.scatterplot-left {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.scatterplot-right {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.scatterplot-tile {
+  flex-basis: calc(50% - 5px);
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.chart-container {
+  margin: 10px;
+  border: 1px solid #ccc;
+  overflow: hidden;
+}
+
+.legend-select-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.legend {
+  list-style: none;
+  padding: 0;
+}
+
+.legend-btn {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+#brush-container {
+  margin: 10px;
+  border: 1px solid #ccc; /* Add border style */
+  overflow: hidden;
+}
+
 #footer {
   font-size: 11px;
   display: flex;
@@ -223,4 +288,26 @@ h1 {
 
 circle.child {
   pointer-events: none;
+}
+/* Marks */
+.point {
+
+}
+.point.inactive {
+  opacity: 0.3;
+}
+
+.label {
+  opacity: 1;
+}
+
+.label.inactive {
+  opacity: 0;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .chart-container {
+    margin: 5px;
+  }
 }

@@ -104,7 +104,6 @@ class WhiskerChart {
 
         vis.genreGroups = vis.chartArea.selectAll('g')
             .data(vis.genresData.values(), data => {
-                //console.log(data)
                 return data;
             })
             .join('g')
@@ -113,15 +112,6 @@ class WhiskerChart {
 
 
         let boxHeight = 20
-
-        // // might need to remove to click the labels
-        // vis.backgroundBox = vis.svg.append('rect')
-        //     .attr('fill', 'black')
-        //     .attr('width', vis.config.containerWidth - 125)
-        //     .attr('height', vis.config.containerHeight - 165)
-        //     .attr('y', 70)
-        //     .attr('x', 25)
-        //     .attr('opacity', 0.05)
 
 
         vis.whiskersOutline = vis.genreGroups.append('line')

@@ -4,7 +4,7 @@ class Scatterplot {
    * @param {Object}
    * @param {Array}
    */
-  constructor(_config, _data) {
+  constructor(_config, _data, _salesMetric) {
     this.config = {
       parentElement: _config.parentElement,
       containerWidth: _config.containerWidth || 600,
@@ -25,6 +25,8 @@ class Scatterplot {
 
       return { ...d, Average_Score: averageScore };
     });
+    this.selectedGenre = null;
+    this.salesMetric = _salesMetric;
     this.initVis();
   }
 
@@ -78,7 +80,7 @@ class Scatterplot {
 
     vis.xScale = d3.scaleLinear().range([0, vis.width]);
 
-    vis.yScale = d3.scaleLinear().range([vis.height, 0]);
+    vis.yScale = d3.scaleLog().range([vis.height, 0]).clamp(true);
 
     // Initialize axes
     vis.xAxis = d3
@@ -133,7 +135,7 @@ class Scatterplot {
       .attr("x", 0)
       .attr("y", 0)
       .attr("dy", ".71em")
-      .text("Sales");
+      .text(vis.salesMetric);
   }
 
   /**
@@ -145,11 +147,13 @@ class Scatterplot {
     // Specificy accessor functions
     vis.colorValue = (d) => d.Genre;
     vis.xValue = (d) => d.Average_Score;
-    vis.yValue = (d) => d.Global_Sales;
+    vis.yValue = (d) => d[vis.salesMetric];
 
     // Set the scale input domains
     vis.xScale.domain([0, d3.max(vis.data, vis.xValue)]);
-    vis.yScale.domain([0, d3.max(vis.data, vis.yValue)]);
+    const minYValue =
+      d3.min(vis.data, vis.yValue) > 0 ? d3.min(vis.data, vis.yValue) : 1;
+    vis.yScale.domain([minYValue, d3.max(vis.data, vis.yValue)]);
 
     vis.renderVis();
   }
@@ -160,16 +164,22 @@ class Scatterplot {
   renderVis() {
     let vis = this;
 
-    // Add circles
+    // Add or update circles
     const circles = vis.chart
       .selectAll(".point")
-      .data(vis.data, (d) => d.trail)
+      .data(vis.data, (d) => d.Name)
       .join("circle")
       .attr("class", "point")
       .attr("r", 4)
       .attr("cy", (d) => vis.yScale(vis.yValue(d)))
       .attr("cx", (d) => vis.xScale(vis.xValue(d)))
-      .attr("fill", (d) => vis.colorScale(vis.colorValue(d)));
+      .attr("fill", (d) => {
+        return vis.selectedGenre !== null && d.Genre === vis.selectedGenre
+          ? vis.colorScale(d.Genre)
+          : "#d3d3d3";
+      })
+      .style("opacity", 0.3);
+    // .attr("fill", (d) => vis.colorScale(vis.colorValue(d)));
 
     // Tooltip event listeners
     circles
@@ -184,11 +194,11 @@ class Scatterplot {
                 <ul>
                   <li>User Score: ${d.User_Score}</li>
                   <li>Critic Score: ${d.Critic_Score}</li>
-                  <li>Global Sales: ${d.Global_Sales}</li>
-                  <li>North America Sales: ${d.NA_Sales}</li>
-                  <li>European Union Sales: ${d.EU_Sales}</li>
-                  <li>Japan Sales: ${d.JP_Sales}</li>
-                  <li>Other Sales: ${d.Other_Sales}</li>
+                  <li>Global Sales: ${d.Global_Sales} Million</li>
+                  <li>North America Sales: ${d.NA_Sales} Million</li>
+                  <li>European Union Sales: ${d.EU_Sales} Million</li>
+                  <li>Japan Sales: ${d.JP_Sales} Million</li>
+                  <li>Other Sales: ${d.Other_Sales} Million</li>
                 </ul>
               `);
       })
@@ -202,8 +212,6 @@ class Scatterplot {
 
     vis.yAxisG.call(vis.yAxis).call((g) => g.select(".domain").remove());
 
-    //outline
-    vis.border = vis.svg.attr("class", "chart-outline");
   }
 
   toggleGenre(genre) {
