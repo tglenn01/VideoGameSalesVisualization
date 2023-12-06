@@ -57,22 +57,6 @@ d3.csv("data/processed2.csv").then((_data) => {
   });
 
   let processedData = data;
-  // let barChart = new Barchart(
-  //   {
-  //     parentElement: "#barchart",
-  //   },
-  //   processedData
-  // );
-  // barChart.updateVis();
-
-  // scatterplot = new Scatterplot(
-  //   {
-  //     parentElement: "#scatterplot",
-  //   },
-  //   processedData,
-  //   "Global_Sales"
-  // );
-  // scatterplot.updateVis();
   const salesMetrics = [
     "Global_Sales",
     "NA_Sales",
@@ -94,18 +78,6 @@ d3.csv("data/processed2.csv").then((_data) => {
   });
 });
 
-// d3.selectAll(".legend-btn").on("click", function () {
-//   d3.selectAll(".legend-btn").classed("inactive", true);
-//   d3.select(this).classed("inactive", !d3.select(this).classed("inactive"));
-//   let selectedGenre = d3.select(this).attr("data-genre");
-
-//   // Update the selected genre in the scatterplot instance
-//   scatterplot.selectedGenre = selectedGenre;
-
-//   // Call updateVis to re-render the scatterplot with new color settings
-//   scatterplot.updateVis();
-// });
-
 d3.selectAll(".legend-btn").on("click", function () {
   d3.selectAll(".legend-btn").classed("inactive", true);
   d3.select(this).classed("inactive", false);
@@ -120,22 +92,6 @@ d3.selectAll(".legend-btn").on("click", function () {
 
   whiskers.toggleGenre(selectedGenre);
 });
-
-// d3.selectAll(".legend-btn").on("click", function () {
-//   // Toggle 'inactive' class
-//   d3.select(this).classed("inactive", !d3.select(this).classed("inactive"));
-
-//   // Check which categories are active
-//   let selectedGenres = [];
-//   d3.selectAll(".legend-btn:not(.inactive)").each(function () {
-//     selectedGenres.push(d3.select(this).attr("data-genre"));
-//   });
-//   // Filter data accordingly and update vis
-//   scatterplot.data = data.filter((d) => {
-//     return selectedGenres.includes(d.Genre);
-//   });
-//   scatterplot.updateVis();
-// });
 
 // Select Button for bubbles dataset
 d3.select('#bubbles-input').on('change', function() {

@@ -176,7 +176,7 @@ class Scatterplot {
       .attr("fill", (d) => {
         return vis.selectedGenre !== null && d.Genre === vis.selectedGenre
           ? vis.colorScale(d.Genre)
-          : "#d3d3d3";
+          : "#5C5C5C";
       })
       .style("opacity", 0.3);
     // .attr("fill", (d) => vis.colorScale(vis.colorValue(d)));
