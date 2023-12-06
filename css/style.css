@@ -208,7 +208,7 @@ h1 {
 .legend-btn[data-genre="Misc"] .legend-symbol {
   background: #ff69b4; /* hotpink */
 }
-.legend-btn[data-genre="Platformer"] .legend-symbol {
+.legend-btn[data-genre="Platform"] .legend-symbol {
   background: #000080; /* navy */
 }
 .legend-btn[data-genre="Role-Playing"] .legend-symbol {
@@ -332,9 +332,7 @@ circle.child {
 .reset-filter-btn {
   font-weight: bold;
   font-size: 32px;
-  color: whitesmoke;
-  stroke-width: 2;
-  stroke: black;
+  color: black;
 }
 
 /* Media query for smaller screens */
