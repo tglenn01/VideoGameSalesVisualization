@@ -47,9 +47,10 @@ class Scatterplot {
       vis.config.margin.bottom;
 
     if (vis.salesMetric == "Global_Sales") {
-      vis.width = vis.config.containerWidth * 2 -
-          vis.config.margin.left -
-          vis.config.margin.right;
+      vis.width =
+        vis.config.containerWidth * 2 -
+        vis.config.margin.left -
+        vis.config.margin.right;
     }
 
     // Initialize scales
@@ -104,7 +105,12 @@ class Scatterplot {
     // Define size of SVG drawing area
     vis.svg = d3
       .select(vis.config.parentElement)
-      .attr("width", vis.salesMetric == "Global_Sales" ? vis.config.containerWidth * 2 : vis.config.containerWidth)
+      .attr(
+        "width",
+        vis.salesMetric == "Global_Sales"
+          ? vis.config.containerWidth * 2
+          : vis.config.containerWidth
+      )
       .attr("height", vis.config.containerHeight);
 
     // Append group element that will contain our actual chart
@@ -190,11 +196,12 @@ class Scatterplot {
     // Tooltip event listeners
     circles
       .on("mouseover", (event, d) => {
-        d3
-          .select("#tooltip")
-          .style("opacity", 1)
-          .style("left", event.pageX + vis.config.tooltipPadding + "px")
-          .style("top", event.pageY + vis.config.tooltipPadding + "px").html(`
+        if (!d3.select(event.currentTarget).classed("inactive")) {
+          d3
+            .select("#tooltip")
+            .style("opacity", 1)
+            .style("left", event.pageX + vis.config.tooltipPadding + "px")
+            .style("top", event.pageY + vis.config.tooltipPadding + "px").html(`
                 <div class="tooltip-title">${d.Genre}</div>
                 <div><i>${d.Name}</i></div>
                 <ul>
@@ -208,6 +215,7 @@ class Scatterplot {
                   <li>Year of Release: ${d.Year_of_Release}</li>
                 </ul>
               `);
+        }
       })
       .on("mouseleave", () => {
         d3.select("#tooltip").style("opacity", 0);

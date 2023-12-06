@@ -276,7 +276,6 @@ h1 {
   font-size: 16px;
 }
 
-
 /*.x-tick-whisker {*/
 /*  font-weight: bold;*/
 /*  font-size: 32px;*/
@@ -319,7 +318,7 @@ circle.child {
 
 } */
 .point.inactive {
-  opacity: 0;
+  opacity: 0.3;
 }
 
 .label {
