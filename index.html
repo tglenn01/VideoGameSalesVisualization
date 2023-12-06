@@ -10,6 +10,14 @@
     <!-- Add HTML content, SVG drawing area, ... -->
 
     <div class="chart-container">
+      <div>
+        Configure circle packing: <select id="bubbles-input">
+        <option value="platformGenre">Platform -> Genre</option>
+        <option value="genrePlatform">Genre -> Platform</option>
+        <option value="genrePublisher">Genre -> Publisher</option>
+      </select>
+      </div>
+
       <ul class="legend">
         <li class="legend-btn" data-genre="Action">
           <span class="legend-symbol"></span> Action
