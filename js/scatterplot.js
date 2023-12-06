@@ -135,7 +135,7 @@ class Scatterplot {
       .attr("x", 0)
       .attr("y", 0)
       .attr("dy", ".71em")
-      .text(vis.salesMetric);
+      .text(vis.salesMetric.replace(/_/g, " "));
   }
 
   /**
