@@ -133,7 +133,7 @@ class Scatterplot {
       .append("text")
       .attr("class", "axis-title")
       .attr("x", 0)
-      .attr("y", 0)
+      .attr("y", 10)
       .attr("dy", ".71em")
       .text(vis.salesMetric.replace(/_/g, " "));
   }
@@ -211,7 +211,6 @@ class Scatterplot {
     vis.xAxisG.call(vis.xAxis).call((g) => g.select(".domain").remove());
 
     vis.yAxisG.call(vis.yAxis).call((g) => g.select(".domain").remove());
-
   }
 
   toggleGenre(genre) {
