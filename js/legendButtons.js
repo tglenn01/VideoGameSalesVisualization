@@ -6,11 +6,7 @@ function initLegend() {
         let selectedGenre = d3.select(this).attr("data-genre");
 
         // Update the selected genre and re-render each scatterplot
-        Object.values(scatterplots).forEach((plot) => {
-            plot.selectedGenre = selectedGenre;
-            plot.updateVis();
-        });
-
+        toggleScatterPlotsGenre(selectedGenre)
         bubbles.toggleGenre(selectedGenre);
         whiskers.toggleGenre(selectedGenre);
     });

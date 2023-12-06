@@ -198,9 +198,7 @@ class Scatterplot {
     vis.yAxisG.call(vis.yAxis).call((g) => g.select(".domain").remove());
   }
 
-  toggleGenre(genre) {
-    let vis = this;
-  }
+
 
   updateSelection(selection) {
     let vis = this;
@@ -223,3 +221,21 @@ class Scatterplot {
       });
   }
 }
+
+function toggleScatterPlotsGenre(genre) {
+
+  Object.values(scatterplots).forEach((plot) => {
+    plot.selectedGenre = genre;
+    plot.updateVis();
+  });
+}
+
+function resetScatterPlots() {
+
+  Object.values(scatterplots).forEach((plot) => {
+    plot.selectedGenre = null;
+    plot.updateVis();
+  });
+}
+
+
