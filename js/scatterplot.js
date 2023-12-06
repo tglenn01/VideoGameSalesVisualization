@@ -213,4 +213,8 @@ class Scatterplot {
     vis.yAxisG.call(vis.yAxis).call((g) => g.select(".domain").remove());
 
   }
+
+  toggleGenre(genre) {
+    let vis = this;
+  }
 }
