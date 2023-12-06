@@ -274,9 +274,31 @@ h1 {
   font-size: 16px;
 }
 
-.x-tick {
-  font-size: 16px;
-  color: black;
+
+/*.x-tick-whisker {*/
+/*  font-weight: bold;*/
+/*  font-size: 32px;*/
+/*  color: #d92323;*/
+/*  stroke-width: 1;*/
+/*  stroke: #732424;*/
+/*}*/
+
+.x-tick-whisker {
+  font-weight: bold;
+  font-size: 32px;
+  color: whitesmoke;
+  stroke-width: 2;
+  stroke: black;
+}
+
+.x-tick-grid-lines {
+  stroke-width: 4;
+  stroke-opacity: 0.2;
+  stroke: black;
+}
+
+.whisker-outline {
+  stroke-width: 5;
 }
 
 .chart-outline {
