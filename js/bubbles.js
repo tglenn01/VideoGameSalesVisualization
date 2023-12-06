@@ -204,16 +204,13 @@ class Bubbles {
       .on("mouseleave", () => {
         d3.select("#tooltip").style("opacity", 0);
       });
-
-
-    //outline
-    vis.border = vis.svg.attr("class", "chart-outline");
   }
 
     toggleGenre(genre) {
         let vis = this;
     }
 
+    // Called by brush and used to update the nodes based on year.
     updateSelection(selection) {
         let vis = this;
 
