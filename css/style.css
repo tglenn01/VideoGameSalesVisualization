@@ -329,6 +329,14 @@ circle.child {
   opacity: 0;
 }
 
+.reset-filter-btn {
+  font-weight: bold;
+  font-size: 32px;
+  color: whitesmoke;
+  stroke-width: 2;
+  stroke: black;
+}
+
 /* Media query for smaller screens */
 @media (max-width: 768px) {
   .chart-container {

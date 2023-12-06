@@ -1,51 +1,10 @@
-let scatterplot, data, bubbles, whiskers;
+let data, bubbles, whiskers;
 let output_genre_platform, output_genre_publisher, output_platform_genre;
-let scatterplots = [];
-
-d3.csv("data/processed2.csv").then((_data) => {
-  // Convert columns to numerical values
-  data = _data;
-  data.forEach((d) => {
-    Object.keys(d).forEach((attr) => {
-      if (
-        attr != "Name" &&
-        attr != "Platform" &&
-        attr != "Genre" &&
-        attr != "Publisher" &&
-        attr != "Developer" &&
-        attr != "Rating"
-      ) {
-        d[attr] = +d[attr];
-      }
-    });
-  });
-
-  let processedData = data;
-  const salesMetrics = [
-    "Global_Sales",
-    "NA_Sales",
-    "EU_Sales",
-    "JP_Sales",
-    "Other_Sales",
-  ];
-
-  // Create multiple scatterplot instances
-  salesMetrics.forEach((metric) => {
-    const scatterplotInstance = new Scatterplot(
-      {
-        parentElement: `#scatterplot-${metric}`,
-      },
-      processedData,
-      metric
-    );
-    scatterplotInstance.updateVis();
-    scatterplots.push(scatterplotInstance);
-  });
-});
+let scatterplots = {};
 
 // Load json data
 d3.json("data/output_platform_genre.json").then((_data) => {
-  output_platform_genre = _data;
+    output_platform_genre = _data;
   bubbles = new Bubbles(
     {
       parentElement: "#bubbles",
@@ -57,18 +16,19 @@ d3.json("data/output_platform_genre.json").then((_data) => {
       parentElement: "#brush",
     },
     _data,
-    bubbles,
-    scatterplots
+    bubbles
   );
 });
 d3.json("data/output_genre_platform.json").then((_data) => {
   output_genre_platform = _data;
-});
+})
 d3.json("data/output_genre_publisher.json").then((_data) => {
   output_genre_publisher = _data;
-});
+})
 
-d3.dsv(";", "data/processed.csv").then((_data) => {
+
+// Load csv and initiate the Sales charts and Whisker Chart
+d3.csv("data/video_game_data.csv").then((_data) => {
   let processedData = preprocessData(_data);
 
   whiskers = new WhiskerChart(
@@ -77,31 +37,42 @@ d3.dsv(";", "data/processed.csv").then((_data) => {
     },
     processedData
   );
+
+
+  const salesMetrics = [
+    "Global_Sales",
+    "NA_Sales",
+    "EU_Sales",
+    "JP_Sales",
+    "Other_Sales",
+  ];
+
+  // Create multiple scatterplot instances
+  salesMetrics.forEach((metric) => {
+    scatterplots[metric] = new Scatterplot(
+        {
+          parentElement: `#scatterplot-${metric}`,
+        },
+        processedData,
+        metric
+    );
+    scatterplots[metric].updateVis();
+  });
+
+
   whiskers.initVis();
 });
 
-d3.selectAll(".legend-btn").on("click", function () {
-  d3.selectAll(".legend-btn").classed("inactive", true);
-  d3.select(this).classed("inactive", false);
-  let selectedGenre = d3.select(this).attr("data-genre");
-
-  // Update the selected genre and re-render each scatterplot
-  Object.values(scatterplots).forEach((plot) => {
-    plot.selectedGenre = selectedGenre;
-    plot.updateVis();
-  });
-
-  bubbles.toggleGenre(selectedGenre);
-  whiskers.toggleGenre(selectedGenre);
-});
+// initialize the Legend
+initLegend();
 
 // Select Button for bubbles dataset
-d3.select("#bubbles-input").on("change", function () {
+d3.select('#bubbles-input').on('change', function() {
   // Get selected dataset
-  const selection = d3.select(this).property("value");
+  const selection = d3.select(this).property('value');
 
   // Get correct dataset
-  switch (selection) {
+  switch(selection) {
     case "genrePlatform":
       bubbles.data = output_genre_platform;
       break;
@@ -113,22 +84,18 @@ d3.select("#bubbles-input").on("change", function () {
       break;
   }
   bubbles.updateVis();
-});
+})
 
-d3.selectAll(".reset-filter-btn").on("click", function () {
-  toggleGenresOn();
-});
+d3.selectAll('.reset-filter-btn').on("click", function () {
+    toggleGenresOn();
+})
+
 
 function toggleGenresOn() {
-  console.log("Resetting All Genres");
-  genresToggleData.forEach((isOn, genre) => {
-    if (!isOn) {
-      bubbles.toggleGenre(genre);
-      whiskers.toggleGenre(genre);
-      scatterplots.forEach((plot) => {
-        plot.toggleGenre(null); // Reset the genre filter on each scatterplot
-      });
-    }
-    genresToggleData.set(genre, true);
-  });
+  console.log('Resetting All Genres');
+
+  bubbles.toggleAllGenresOn();
+  whiskers.toggleAllGenresOn();
+
+  resetLegend();
 }
