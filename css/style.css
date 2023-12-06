@@ -49,8 +49,8 @@ body {
 }
 
 #scatterplot-Global_Sales {
-  max-width: 600px; /* Set a max-width for the global sales plot if desired */
-  margin: auto; /* This will center the SVG if it's smaller than its container */
+  max-width: 1200px;
+  margin: auto;
 }
 
 .chart-container {

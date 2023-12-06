@@ -46,6 +46,12 @@ class Scatterplot {
       vis.config.margin.top -
       vis.config.margin.bottom;
 
+    if (vis.salesMetric == "Global_Sales") {
+      vis.width = vis.config.containerWidth * 2 -
+          vis.config.margin.left -
+          vis.config.margin.right;
+    }
+
     // Initialize scales
     vis.colorScale = d3
       .scaleOrdinal()
@@ -98,7 +104,7 @@ class Scatterplot {
     // Define size of SVG drawing area
     vis.svg = d3
       .select(vis.config.parentElement)
-      .attr("width", vis.config.containerWidth)
+      .attr("width", vis.salesMetric == "Global_Sales" ? vis.config.containerWidth * 2 : vis.config.containerWidth)
       .attr("height", vis.config.containerHeight);
 
     // Append group element that will contain our actual chart
