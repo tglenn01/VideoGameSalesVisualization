@@ -233,13 +233,13 @@ class Bubbles {
         let vis = this;
         vis.selectedGenre = genre;
         vis.updateVis();
-    }
 
         vis.updateCirclesAndLabels();
 
         if (vis.genrePlatformDatasetSelected) {
           zoom(d3.select("#" + genre))
         }
+    }
 
     // Removes genre filter and toggles all genres back on
     toggleAllGenresOn() {
