@@ -1,43 +1,7 @@
 let scatterplot, data, bubbles, whiskers;
 let output_genre_platform, output_genre_publisher, output_platform_genre;
+let scatterplots = [];
 
-// Load json data
-d3.json("data/output_platform_genre.json").then((_data) => {
-    output_platform_genre = _data;
-  bubbles = new Bubbles(
-    {
-      parentElement: "#bubbles",
-    },
-    _data
-  );
-  let brush = new Brush(
-    {
-      parentElement: "#brush",
-    },
-    _data,
-    bubbles
-  );
-});
-d3.json("data/output_genre_platform.json").then((_data) => {
-  output_genre_platform = _data;
-})
-d3.json("data/output_genre_publisher.json").then((_data) => {
-  output_genre_publisher = _data;
-})
-
-d3.dsv(";", "data/processed.csv").then((_data) => {
-  let processedData = preprocessData(_data);
-
-  whiskers = new WhiskerChart(
-    {
-      parentElement: "#whisker",
-    },
-    processedData
-  );
-  whiskers.initVis();
-});
-
-let scatterplots = {};
 d3.csv("data/processed2.csv").then((_data) => {
   // Convert columns to numerical values
   data = _data;
@@ -67,15 +31,53 @@ d3.csv("data/processed2.csv").then((_data) => {
 
   // Create multiple scatterplot instances
   salesMetrics.forEach((metric) => {
-    scatterplots[metric] = new Scatterplot(
+    const scatterplotInstance = new Scatterplot(
       {
         parentElement: `#scatterplot-${metric}`,
       },
       processedData,
       metric
     );
-    scatterplots[metric].updateVis();
+    scatterplotInstance.updateVis();
+    scatterplots.push(scatterplotInstance);
   });
+});
+
+// Load json data
+d3.json("data/output_platform_genre.json").then((_data) => {
+  output_platform_genre = _data;
+  bubbles = new Bubbles(
+    {
+      parentElement: "#bubbles",
+    },
+    _data
+  );
+  let brush = new Brush(
+    {
+      parentElement: "#brush",
+    },
+    _data,
+    bubbles,
+    scatterplots
+  );
+});
+d3.json("data/output_genre_platform.json").then((_data) => {
+  output_genre_platform = _data;
+});
+d3.json("data/output_genre_publisher.json").then((_data) => {
+  output_genre_publisher = _data;
+});
+
+d3.dsv(";", "data/processed.csv").then((_data) => {
+  let processedData = preprocessData(_data);
+
+  whiskers = new WhiskerChart(
+    {
+      parentElement: "#whisker",
+    },
+    processedData
+  );
+  whiskers.initVis();
 });
 
 d3.selectAll(".legend-btn").on("click", function () {
@@ -89,17 +91,16 @@ d3.selectAll(".legend-btn").on("click", function () {
     plot.updateVis();
   });
 
-
   whiskers.toggleGenre(selectedGenre);
 });
 
 // Select Button for bubbles dataset
-d3.select('#bubbles-input').on('change', function() {
+d3.select("#bubbles-input").on("change", function () {
   // Get selected dataset
-  const selection = d3.select(this).property('value');
+  const selection = d3.select(this).property("value");
 
   // Get correct dataset
-  switch(selection) {
+  switch (selection) {
     case "genrePlatform":
       bubbles.data = output_genre_platform;
       break;
@@ -111,22 +112,22 @@ d3.select('#bubbles-input').on('change', function() {
       break;
   }
   bubbles.updateVis();
-})
+});
 
-d3.selectAll('.reset-filter-btn').on("click", function () {
-    toggleGenresOn();
-})
-
+d3.selectAll(".reset-filter-btn").on("click", function () {
+  toggleGenresOn();
+});
 
 function toggleGenresOn() {
-  console.log('Resetting All Genres');
+  console.log("Resetting All Genres");
   genresToggleData.forEach((isOn, genre) => {
     if (!isOn) {
-      bubbles.toggleGenre(genre)
-      whiskers.toggleGenre(genre)
-      scatterplot.toggleGenre(genre)
+      bubbles.toggleGenre(genre);
+      whiskers.toggleGenre(genre);
+      scatterplots.forEach((plot) => {
+        plot.toggleGenre(null); // Reset the genre filter on each scatterplot
+      });
     }
-    genresToggleData.set(genre, true)
-  })
+    genresToggleData.set(genre, true);
+  });
 }
-

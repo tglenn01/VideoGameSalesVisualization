@@ -199,6 +199,7 @@ class Scatterplot {
                   <li>European Union Sales: ${d.EU_Sales} Million</li>
                   <li>Japan Sales: ${d.JP_Sales} Million</li>
                   <li>Other Sales: ${d.Other_Sales} Million</li>
+                  <li>Year of Release: ${d.Year_of_Release}</li>
                 </ul>
               `);
       })
@@ -215,5 +216,26 @@ class Scatterplot {
 
   toggleGenre(genre) {
     let vis = this;
+  }
+
+  updateSelection(selection) {
+    let vis = this;
+    console.log("test");
+    const selectionStart = selection[0].getFullYear();
+    const selectionEnd = selection[1].getFullYear();
+
+    vis.chart
+      .selectAll(".point")
+      .style("opacity", (d) => {
+        return d.Year_of_Release >= selectionStart &&
+          d.Year_of_Release <= selectionEnd
+          ? 0.3
+          : 0;
+      })
+      .classed("inactive", (d) => {
+        return (
+          d.Year_of_Release < selectionStart || d.Year_of_Release > selectionEnd
+        );
+      });
   }
 }
