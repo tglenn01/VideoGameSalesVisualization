@@ -13,6 +13,15 @@
     <div class="dashboard-container">
       <!-- Top Section (Legends) -->
       <div class="top-section">
+        <div class="title-container">
+          <h1>Visualising Video Games 1985-2016</h1>
+          <p>Lorem Ipsum is simply dummy text of the printing
+            and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s,
+            when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book.</p>
+        </div>
+
         <div>
           Configure circle packing: <select id="bubbles-input">
           <option value="platformGenre">Platform -> Genre</option>
@@ -68,10 +77,12 @@
       <!-- Middle Section (bubbles and whisker) -->
       <div class="middle-section">
         <div id="bubbles-container" class="chart-container">
+          <h3>Zoomable Circle Packing</h3>
           <svg id="bubbles"></svg>
         </div>
 
         <div id="whisker-container" class="chart-container">
+          <h3>Whisker Chart showing Genre vs ESRB Rating</h3>
           <svg id="whisker"></svg>
         </div>
       </div>
@@ -79,6 +90,7 @@
       <!-- Bottom Section (scatterplots) -->
       <div class="bottom-section">
         <div id="scatterplot-container" class="chart-container">
+          <h3>Sales in Different Regions VS Average Video Game Score</h3>
           <div class="scatterplot-left">
             <svg id="scatterplot-Global_Sales"></svg>
           </div>
