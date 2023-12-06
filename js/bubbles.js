@@ -63,7 +63,6 @@ class Bubbles {
 
     renderVis() {
         let vis = this;
-        console.log(vis.data);
 
         // Create the pack layout.
         vis.pack = d3.pack().size([vis.width, vis.height]).padding(3);
@@ -123,9 +122,6 @@ class Bubbles {
             })
             .style("fill-opacity", (d) => (d.parent === vis.root ? 1 : 0))
             .style("display", (d) => (d.parent === vis.root ? "inline" : "none"));
-
-        console.log(label)
-
 
         // Add a tspan for each CamelCase-separated word.
         label
