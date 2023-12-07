@@ -53,8 +53,6 @@ class Scatterplot {
         vis.config.margin.right;
     }
 
-
-
     vis.xScale = d3.scaleLinear().range([0, vis.width]);
 
     vis.yScale = d3.scaleLog().range([vis.height, 0]).clamp(true);
@@ -66,11 +64,36 @@ class Scatterplot {
       .tickSize(-vis.height - 10)
       .tickPadding(10);
 
+    let tickValues;
+    switch (vis.salesMetric) {
+      case "Global_Sales":
+        tickValues = [0, 2, 4, 6, 10, 20, 40, 60, 90];
+        break;
+      case "NA_Sales":
+        tickValues = [0, 5, 10, 15, 20, 25, 30, 35, 40];
+        break;
+      case "EU_Sales":
+        tickValues = [0, 4, 8, 12, 16, 20];
+        break;
+      case "JP_Sales":
+        tickValues = [0, 1, 2, 3, 4, 5, 6];
+        break;
+      case "Other_Sales":
+        tickValues = [0, 2, 4, 6, 8, 10];
+        break;
+      default:
+        tickValues = [0, 5, 10, 15, 20]; // Default tick values
+    }
+
     vis.yAxis = d3
       .axisLeft(vis.yScale)
-      .ticks(6)
+      .tickValues(tickValues)
       .tickSize(-vis.width - 10)
-      .tickPadding(10);
+      .tickPadding(10)
+      .tickFormat((d) => {
+        // Convert the logarithmic scale value back to a linear scale
+        return Math.round(d) + "M"; // Format the number with two decimal places and add 'M' for Millions
+      });
 
     // Define size of SVG drawing area
     vis.svg = d3
@@ -154,8 +177,8 @@ class Scatterplot {
       .attr("class", "point")
       .attr("r", (d) => {
         return vis.selectedGenre !== null && d.Genre === vis.selectedGenre
-            ? 5
-            : 4;
+          ? 5
+          : 4;
       })
       .attr("cy", (d) => vis.yScale(vis.yValue(d)))
       .attr("cx", (d) => vis.xScale(vis.xValue(d)))
@@ -164,16 +187,16 @@ class Scatterplot {
           ? colourScale(d.Genre)
           : "#5C5C5C";
       })
-      .attr('stroke', 'black')
+      .attr("stroke", "black")
       .attr("stroke-width", (d) => {
         return vis.selectedGenre !== null && d.Genre === vis.selectedGenre
-            ? '1px'
-            : "0px";
+          ? "1px"
+          : "0px";
       })
       .attr("opacity", (d) => {
         return vis.selectedGenre !== null && d.Genre === vis.selectedGenre
-            ? '.8'
-            : ".2";
+          ? ".8"
+          : ".2";
       });
     // .attr("fill", (d) => vis.colorScale(vis.colorValue(d)));
 
@@ -212,8 +235,6 @@ class Scatterplot {
     vis.yAxisG.call(vis.yAxis).call((g) => g.select(".domain").remove());
   }
 
-
-
   updateSelection(selection) {
     let vis = this;
     const selectionStart = selection[0].getFullYear();
@@ -236,7 +257,6 @@ class Scatterplot {
 }
 
 function toggleScatterPlotsGenre(genre) {
-
   Object.values(scatterplots).forEach((plot) => {
     plot.selectedGenre = genre;
     plot.updateVis();
@@ -244,7 +264,6 @@ function toggleScatterPlotsGenre(genre) {
 }
 
 function resetScatterPlots() {
-
   Object.values(scatterplots).forEach((plot) => {
     plot.selectedGenre = null;
     plot.updateVis();
