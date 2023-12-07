@@ -1,1 +1,3 @@
 # D3 Project Starter Template
+
+This visualization aims to present a clear and interactive view of game sales and ratings across genres, major global regions, and time. Use the circle packing chart to explore different games and configure how you want to search using the drop down on the right, the whisker chart to analyze Genre vs ESRB Rating, and the scatterplots to look at regional variances in Sales Vs Average Score. You can filter by clicking one of the genres on the right and use the year range slider to change the time range shown.
